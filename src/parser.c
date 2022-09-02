@@ -1,6279 +1,1380 @@
-#include <tree_sitter/parser.h>
 
-#if defined(__GNUC__) || defined(__clang__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-#endif
 
-#define LANGUAGE_VERSION 11
-#define STATE_COUNT 252
-#define LARGE_STATE_COUNT 2
-#define SYMBOL_COUNT 73
-#define ALIAS_COUNT 0
-#define TOKEN_COUNT 39
-#define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 12
-#define MAX_ALIAS_SEQUENCE_LENGTH 4
 
-enum {
-  anon_sym_LPAREN = 1,
-  anon_sym_RPAREN = 2,
-  anon_sym_LBRACE = 3,
-  anon_sym_RBRACE = 4,
-  anon_sym_LBRACK = 5,
-  anon_sym_RBRACK = 6,
-  anon_sym_COLON = 7,
-  anon_sym_PIPE = 8,
-  anon_sym_DOT = 9,
-  anon_sym_QMARK_DOT = 10,
-  anon_sym_BANG_DOT = 11,
-  anon_sym_COMMA = 12,
-  sym__single_quote = 13,
-  sym__double_quote = 14,
-  anon_sym_PLUS = 15,
-  anon_sym_DASH = 16,
-  anon_sym_SLASH = 17,
-  anon_sym_STAR = 18,
-  anon_sym_PERCENT = 19,
-  anon_sym_EQ_EQ = 20,
-  anon_sym_EQ_EQ_EQ = 21,
-  anon_sym_BANG_EQ = 22,
-  anon_sym_BANG_EQ_EQ = 23,
-  anon_sym_AMP_AMP = 24,
-  anon_sym_PIPE_PIPE = 25,
-  anon_sym_LT = 26,
-  anon_sym_LT_EQ = 27,
-  anon_sym_GT = 28,
-  anon_sym_GT_EQ = 29,
-  anon_sym_EQ = 30,
-  anon_sym_BANG = 31,
-  sym_number = 32,
-  aux_sym_string_token1 = 33,
-  aux_sym_string_token2 = 34,
-  sym_identifier = 35,
-  anon_sym_as = 36,
-  anon_sym_let = 37,
-  anon_sym_SEMI = 38,
-  sym_program = 39,
-  sym__definition = 40,
-  sym__any_expression = 41,
-  sym_expression = 42,
-  sym_group = 43,
-  sym__primitive = 44,
-  sym_object = 45,
-  sym_array = 46,
-  sym_pair = 47,
-  sym_pipe_sequence = 48,
-  sym_pipe_call = 49,
-  sym_pipe_arguments = 50,
-  sym_member_expression = 51,
-  sym_arguments = 52,
-  sym__pipe_argument = 53,
-  sym__binary_op = 54,
-  sym_assignment_expression = 55,
-  sym_unary_operator = 56,
-  sym_unary_expression = 57,
-  sym_binary_expression = 58,
-  sym_string = 59,
-  sym_call_expression = 60,
-  sym__alias = 61,
-  sym_structural_assignment = 62,
-  sym_structural_declaration = 63,
-  aux_sym_program_repeat1 = 64,
-  aux_sym_object_repeat1 = 65,
-  aux_sym_array_repeat1 = 66,
-  aux_sym_pipe_sequence_repeat1 = 67,
-  aux_sym_pipe_arguments_repeat1 = 68,
-  aux_sym_arguments_repeat1 = 69,
-  aux_sym_string_repeat1 = 70,
-  aux_sym_string_repeat2 = 71,
-  aux_sym_structural_declaration_repeat1 = 72,
-};
 
-static const char *ts_symbol_names[] = {
-  [ts_builtin_sym_end] = "end",
-  [anon_sym_LPAREN] = "(",
-  [anon_sym_RPAREN] = ")",
-  [anon_sym_LBRACE] = "{",
-  [anon_sym_RBRACE] = "}",
-  [anon_sym_LBRACK] = "[",
-  [anon_sym_RBRACK] = "]",
-  [anon_sym_COLON] = ":",
-  [anon_sym_PIPE] = "|",
-  [anon_sym_DOT] = ".",
-  [anon_sym_QMARK_DOT] = "?.",
-  [anon_sym_BANG_DOT] = "!.",
-  [anon_sym_COMMA] = ",",
-  [sym__single_quote] = "_single_quote",
-  [sym__double_quote] = "_double_quote",
-  [anon_sym_PLUS] = "+",
-  [anon_sym_DASH] = "-",
-  [anon_sym_SLASH] = "/",
-  [anon_sym_STAR] = "*",
-  [anon_sym_PERCENT] = "%",
-  [anon_sym_EQ_EQ] = "==",
-  [anon_sym_EQ_EQ_EQ] = "===",
-  [anon_sym_BANG_EQ] = "!=",
-  [anon_sym_BANG_EQ_EQ] = "!==",
-  [anon_sym_AMP_AMP] = "&&",
-  [anon_sym_PIPE_PIPE] = "||",
-  [anon_sym_LT] = "<",
-  [anon_sym_LT_EQ] = "<=",
-  [anon_sym_GT] = ">",
-  [anon_sym_GT_EQ] = ">=",
-  [anon_sym_EQ] = "=",
-  [anon_sym_BANG] = "!",
-  [sym_number] = "number",
-  [aux_sym_string_token1] = "string_token1",
-  [aux_sym_string_token2] = "string_token2",
-  [sym_identifier] = "identifier",
-  [anon_sym_as] = "as",
-  [anon_sym_let] = "let",
-  [anon_sym_SEMI] = ";",
-  [sym_program] = "program",
-  [sym__definition] = "_definition",
-  [sym__any_expression] = "_any_expression",
-  [sym_expression] = "expression",
-  [sym_group] = "group",
-  [sym__primitive] = "_primitive",
-  [sym_object] = "object",
-  [sym_array] = "array",
-  [sym_pair] = "pair",
-  [sym_pipe_sequence] = "pipe_sequence",
-  [sym_pipe_call] = "pipe_call",
-  [sym_pipe_arguments] = "pipe_arguments",
-  [sym_member_expression] = "member_expression",
-  [sym_arguments] = "arguments",
-  [sym__pipe_argument] = "_pipe_argument",
-  [sym__binary_op] = "_binary_op",
-  [sym_assignment_expression] = "assignment_expression",
-  [sym_unary_operator] = "unary_operator",
-  [sym_unary_expression] = "unary_expression",
-  [sym_binary_expression] = "binary_expression",
-  [sym_string] = "string",
-  [sym_call_expression] = "call_expression",
-  [sym__alias] = "_alias",
-  [sym_structural_assignment] = "structural_assignment",
-  [sym_structural_declaration] = "structural_declaration",
-  [aux_sym_program_repeat1] = "program_repeat1",
-  [aux_sym_object_repeat1] = "object_repeat1",
-  [aux_sym_array_repeat1] = "array_repeat1",
-  [aux_sym_pipe_sequence_repeat1] = "pipe_sequence_repeat1",
-  [aux_sym_pipe_arguments_repeat1] = "pipe_arguments_repeat1",
-  [aux_sym_arguments_repeat1] = "arguments_repeat1",
-  [aux_sym_string_repeat1] = "string_repeat1",
-  [aux_sym_string_repeat2] = "string_repeat2",
-  [aux_sym_structural_declaration_repeat1] = "structural_declaration_repeat1",
-};
 
-static TSSymbol ts_symbol_map[] = {
-  [ts_builtin_sym_end] = ts_builtin_sym_end,
-  [anon_sym_LPAREN] = anon_sym_LPAREN,
-  [anon_sym_RPAREN] = anon_sym_RPAREN,
-  [anon_sym_LBRACE] = anon_sym_LBRACE,
-  [anon_sym_RBRACE] = anon_sym_RBRACE,
-  [anon_sym_LBRACK] = anon_sym_LBRACK,
-  [anon_sym_RBRACK] = anon_sym_RBRACK,
-  [anon_sym_COLON] = anon_sym_COLON,
-  [anon_sym_PIPE] = anon_sym_PIPE,
-  [anon_sym_DOT] = anon_sym_DOT,
-  [anon_sym_QMARK_DOT] = anon_sym_QMARK_DOT,
-  [anon_sym_BANG_DOT] = anon_sym_BANG_DOT,
-  [anon_sym_COMMA] = anon_sym_COMMA,
-  [sym__single_quote] = sym__single_quote,
-  [sym__double_quote] = sym__double_quote,
-  [anon_sym_PLUS] = anon_sym_PLUS,
-  [anon_sym_DASH] = anon_sym_DASH,
-  [anon_sym_SLASH] = anon_sym_SLASH,
-  [anon_sym_STAR] = anon_sym_STAR,
-  [anon_sym_PERCENT] = anon_sym_PERCENT,
-  [anon_sym_EQ_EQ] = anon_sym_EQ_EQ,
-  [anon_sym_EQ_EQ_EQ] = anon_sym_EQ_EQ_EQ,
-  [anon_sym_BANG_EQ] = anon_sym_BANG_EQ,
-  [anon_sym_BANG_EQ_EQ] = anon_sym_BANG_EQ_EQ,
-  [anon_sym_AMP_AMP] = anon_sym_AMP_AMP,
-  [anon_sym_PIPE_PIPE] = anon_sym_PIPE_PIPE,
-  [anon_sym_LT] = anon_sym_LT,
-  [anon_sym_LT_EQ] = anon_sym_LT_EQ,
-  [anon_sym_GT] = anon_sym_GT,
-  [anon_sym_GT_EQ] = anon_sym_GT_EQ,
-  [anon_sym_EQ] = anon_sym_EQ,
-  [anon_sym_BANG] = anon_sym_BANG,
-  [sym_number] = sym_number,
-  [aux_sym_string_token1] = aux_sym_string_token1,
-  [aux_sym_string_token2] = aux_sym_string_token2,
-  [sym_identifier] = sym_identifier,
-  [anon_sym_as] = anon_sym_as,
-  [anon_sym_let] = anon_sym_let,
-  [anon_sym_SEMI] = anon_sym_SEMI,
-  [sym_program] = sym_program,
-  [sym__definition] = sym__definition,
-  [sym__any_expression] = sym__any_expression,
-  [sym_expression] = sym_expression,
-  [sym_group] = sym_group,
-  [sym__primitive] = sym__primitive,
-  [sym_object] = sym_object,
-  [sym_array] = sym_array,
-  [sym_pair] = sym_pair,
-  [sym_pipe_sequence] = sym_pipe_sequence,
-  [sym_pipe_call] = sym_pipe_call,
-  [sym_pipe_arguments] = sym_pipe_arguments,
-  [sym_member_expression] = sym_member_expression,
-  [sym_arguments] = sym_arguments,
-  [sym__pipe_argument] = sym__pipe_argument,
-  [sym__binary_op] = sym__binary_op,
-  [sym_assignment_expression] = sym_assignment_expression,
-  [sym_unary_operator] = sym_unary_operator,
-  [sym_unary_expression] = sym_unary_expression,
-  [sym_binary_expression] = sym_binary_expression,
-  [sym_string] = sym_string,
-  [sym_call_expression] = sym_call_expression,
-  [sym__alias] = sym__alias,
-  [sym_structural_assignment] = sym_structural_assignment,
-  [sym_structural_declaration] = sym_structural_declaration,
-  [aux_sym_program_repeat1] = aux_sym_program_repeat1,
-  [aux_sym_object_repeat1] = aux_sym_object_repeat1,
-  [aux_sym_array_repeat1] = aux_sym_array_repeat1,
-  [aux_sym_pipe_sequence_repeat1] = aux_sym_pipe_sequence_repeat1,
-  [aux_sym_pipe_arguments_repeat1] = aux_sym_pipe_arguments_repeat1,
-  [aux_sym_arguments_repeat1] = aux_sym_arguments_repeat1,
-  [aux_sym_string_repeat1] = aux_sym_string_repeat1,
-  [aux_sym_string_repeat2] = aux_sym_string_repeat2,
-  [aux_sym_structural_declaration_repeat1] = aux_sym_structural_declaration_repeat1,
-};
 
-static const TSSymbolMetadata ts_symbol_metadata[] = {
-  [ts_builtin_sym_end] = {
-    .visible = false,
-    .named = true,
-  },
-  [anon_sym_LPAREN] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_RPAREN] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_LBRACE] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_RBRACE] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_LBRACK] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_RBRACK] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_COLON] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_PIPE] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_DOT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_QMARK_DOT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_BANG_DOT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_COMMA] = {
-    .visible = true,
-    .named = false,
-  },
-  [sym__single_quote] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym__double_quote] = {
-    .visible = false,
-    .named = true,
-  },
-  [anon_sym_PLUS] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_DASH] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_SLASH] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_STAR] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_PERCENT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_EQ_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_EQ_EQ_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_BANG_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_BANG_EQ_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_AMP_AMP] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_PIPE_PIPE] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_LT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_LT_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_GT] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_GT_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_EQ] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_BANG] = {
-    .visible = true,
-    .named = false,
-  },
-  [sym_number] = {
-    .visible = true,
-    .named = true,
-  },
-  [aux_sym_string_token1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_string_token2] = {
-    .visible = false,
-    .named = false,
-  },
-  [sym_identifier] = {
-    .visible = true,
-    .named = true,
-  },
-  [anon_sym_as] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_let] = {
-    .visible = true,
-    .named = false,
-  },
-  [anon_sym_SEMI] = {
-    .visible = true,
-    .named = false,
-  },
-  [sym_program] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym__definition] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym__any_expression] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_group] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym__primitive] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym_object] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_array] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_pair] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_pipe_sequence] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_pipe_call] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_pipe_arguments] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_member_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_arguments] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym__pipe_argument] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym__binary_op] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym_assignment_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_unary_operator] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_unary_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_binary_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_string] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_call_expression] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym__alias] = {
-    .visible = false,
-    .named = true,
-  },
-  [sym_structural_assignment] = {
-    .visible = true,
-    .named = true,
-  },
-  [sym_structural_declaration] = {
-    .visible = true,
-    .named = true,
-  },
-  [aux_sym_program_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_object_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_array_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_pipe_sequence_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_pipe_arguments_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_arguments_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_string_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_string_repeat2] = {
-    .visible = false,
-    .named = false,
-  },
-  [aux_sym_structural_declaration_repeat1] = {
-    .visible = false,
-    .named = false,
-  },
-};
 
-enum {
-  field_alias = 1,
-  field_arguments = 2,
-  field_function = 3,
-  field_key = 4,
-  field_left = 5,
-  field_name = 6,
-  field_object = 7,
-  field_operator = 8,
-  field_pipes = 9,
-  field_property = 10,
-  field_right = 11,
-  field_value = 12,
-};
+<!DOCTYPE html>
+<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark" data-a11y-animated-images="system">
+  <head>
+    <meta charset="utf-8">
+  <link rel="dns-prefetch" href="https://github.githubassets.com">
+  <link rel="dns-prefetch" href="https://avatars.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+  <link rel="preconnect" href="https://github.githubassets.com" crossorigin>
+  <link rel="preconnect" href="https://avatars.githubusercontent.com">
 
-static const char *ts_field_names[] = {
-  [0] = NULL,
-  [field_alias] = "alias",
-  [field_arguments] = "arguments",
-  [field_function] = "function",
-  [field_key] = "key",
-  [field_left] = "left",
-  [field_name] = "name",
-  [field_object] = "object",
-  [field_operator] = "operator",
-  [field_pipes] = "pipes",
-  [field_property] = "property",
-  [field_right] = "right",
-  [field_value] = "value",
-};
 
-static const TSFieldMapSlice ts_field_map_slices[15] = {
-  [1] = {.index = 0, .length = 1},
-  [2] = {.index = 1, .length = 1},
-  [3] = {.index = 2, .length = 2},
-  [4] = {.index = 4, .length = 1},
-  [5] = {.index = 5, .length = 2},
-  [6] = {.index = 7, .length = 2},
-  [7] = {.index = 9, .length = 2},
-  [8] = {.index = 11, .length = 3},
-  [9] = {.index = 14, .length = 2},
-  [10] = {.index = 16, .length = 2},
-  [11] = {.index = 18, .length = 3},
-  [12] = {.index = 21, .length = 1},
-  [13] = {.index = 22, .length = 2},
-  [14] = {.index = 24, .length = 4},
-};
 
-static const TSFieldMapEntry ts_field_map_entries[] = {
-  [0] =
-    {field_name, 0},
-  [1] =
-    {field_pipes, 1},
-  [2] =
-    {field_operator, 0},
-    {field_value, 1},
-  [4] =
-    {field_function, 0},
-  [5] =
-    {field_name, 0},
-    {field_value, 2},
-  [7] =
-    {field_alias, 1, .inherited = true},
-    {field_name, 0},
-  [9] =
-    {field_object, 0},
-    {field_property, 2},
-  [11] =
-    {field_left, 0},
-    {field_operator, 1},
-    {field_right, 2},
-  [14] =
-    {field_key, 0},
-    {field_value, 2},
-  [16] =
-    {field_arguments, 2},
-    {field_function, 0},
-  [18] =
-    {field_name, 0},
-    {field_operator, 1},
-    {field_value, 2},
-  [21] =
-    {field_alias, 1},
-  [22] =
-    {field_arguments, 1},
-    {field_name, 0},
-  [24] =
-    {field_alias, 3, .inherited = true},
-    {field_name, 0},
-    {field_operator, 1},
-    {field_value, 2},
-};
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/light-5178aee0ee76.css" /><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/dark-217d4f9c8e70.css" /><link data-color-theme="dark_dimmed" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed-0adfa28f0e68.css" /><link data-color-theme="dark_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_high_contrast-1c8575b36644.css" /><link data-color-theme="dark_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind-5113d2be20b0.css" /><link data-color-theme="light_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind-c96add742484.css" /><link data-color-theme="light_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_high_contrast-290f92f5e867.css" /><link data-color-theme="light_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia-cdd88f146bf7.css" /><link data-color-theme="dark_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia-2171ea0f078b.css" />
+  
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-49141272cf08.css" />
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-1dc19945fbd1.css" />
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-1624cd967226.css" />
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/code-3d7b701fc6eb.css" />
 
-static TSSymbol ts_alias_sequences[15][MAX_ALIAS_SEQUENCE_LENGTH] = {
-  [0] = {0},
-};
+    <meta name="optimizely-datafile" content="{&quot;groups&quot;: [], &quot;environmentKey&quot;: &quot;production&quot;, &quot;rollouts&quot;: [], &quot;typedAudiences&quot;: [], &quot;projectId&quot;: &quot;16737760170&quot;, &quot;variables&quot;: [], &quot;featureFlags&quot;: [], &quot;experiments&quot;: [{&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;20667381018&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;20680930759&quot;, &quot;key&quot;: &quot;treatment&quot;}], &quot;id&quot;: &quot;20652570897&quot;, &quot;key&quot;: &quot;project_genesis&quot;, &quot;layerId&quot;: &quot;20672300363&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;20667381018&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;20680930759&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;83356e17066d336d1803024138ecb683&quot;: &quot;treatment&quot;, &quot;18e31c8a9b2271332466133162a4aa0d&quot;: &quot;treatment&quot;, &quot;10f8ab3fbc5ebe989a36a05f79d48f32&quot;: &quot;treatment&quot;, &quot;1686089f6d540cd2deeaec60ee43ecf7&quot;: &quot;treatment&quot;}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21427950901&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21429710665&quot;, &quot;key&quot;: &quot;beginner&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21437291543&quot;, &quot;key&quot;: &quot;upstart&quot;}], &quot;id&quot;: &quot;21445030708&quot;, &quot;key&quot;: &quot;_259_zero_user_dashboard&quot;, &quot;layerId&quot;: &quot;21434011841&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 3334}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 8333}, {&quot;entityId&quot;: &quot;21427950901&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;3c64268131793aa297119a343c19e345&quot;: &quot;beginner&quot;, &quot;95b24126db31ea8693c0fe5ea9f53b65&quot;: &quot;beginner&quot;, &quot;086e2abe64e9101112af53b95d2d90b9&quot;: &quot;upstart&quot;, &quot;bae688df9d297afac98e2d254e912ada&quot;: &quot;control&quot;, &quot;6c2cfda7c41396fcc31a4db759a42b94&quot;: &quot;beginner&quot;, &quot;16ed2b4ff7de02663b7c606309695916&quot;: &quot;control&quot;, &quot;1971768911.1635962195&quot;: &quot;beginner&quot;, &quot;830bf802470ec6c9c5800c99d8e57445&quot;: &quot;beginner&quot;}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21454052779&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21450922535&quot;, &quot;key&quot;: &quot;redesign&quot;}], &quot;id&quot;: &quot;21486342806&quot;, &quot;key&quot;: &quot;_261_downgrade&quot;, &quot;layerId&quot;: &quot;21478441323&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21454052779&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21450922535&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;60c046ae30e9007c321e5539ae1738b5&quot;: &quot;redesign&quot;}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21540260416&quot;, &quot;key&quot;: &quot;variant_fetch_upstream&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21551370594&quot;, &quot;key&quot;: &quot;variant_sync_fork&quot;}], &quot;id&quot;: &quot;21532540507&quot;, &quot;key&quot;: &quot;fork_syncing&quot;, &quot;layerId&quot;: &quot;21510660568&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21551370594&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21551370594&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;bcceffdcc63834cc146ddb8cce0c556d&quot;: &quot;variant_sync_fork&quot;, &quot;0bd228f43ec6ac1a9eb9087f4e2471e6&quot;: &quot;variant_sync_fork&quot;, &quot;404ee4d837b290b3089170d9226758ea&quot;: &quot;variant_sync_fork&quot;}}, {&quot;status&quot;: &quot;Running&quot;, &quot;audienceIds&quot;: [], &quot;variations&quot;: [{&quot;variables&quot;: [], &quot;id&quot;: &quot;21672251105&quot;, &quot;key&quot;: &quot;control&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21636601473&quot;, &quot;key&quot;: &quot;primer&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21663911434&quot;, &quot;key&quot;: &quot;growth&quot;}, {&quot;variables&quot;: [], &quot;id&quot;: &quot;21673341369&quot;, &quot;key&quot;: &quot;brand&quot;}], &quot;id&quot;: &quot;21685100630&quot;, &quot;key&quot;: &quot;_241_onboard_users_to_protect_branches&quot;, &quot;layerId&quot;: &quot;21696970697&quot;, &quot;trafficAllocation&quot;: [{&quot;entityId&quot;: &quot;21672251105&quot;, &quot;endOfRange&quot;: 825}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 2310}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 2500}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 2830}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 3135}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 3310}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 3325}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 3980}, {&quot;entityId&quot;: &quot;21636601473&quot;, &quot;endOfRange&quot;: 3995}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 4170}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 5000}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 5155}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 5330}, {&quot;entityId&quot;: &quot;21663911434&quot;, &quot;endOfRange&quot;: 5825}, {&quot;entityId&quot;: &quot;21672251105&quot;, &quot;endOfRange&quot;: 6000}, {&quot;entityId&quot;: &quot;21672251105&quot;, &quot;endOfRange&quot;: 7500}, {&quot;entityId&quot;: &quot;21673341369&quot;, &quot;endOfRange&quot;: 7830}, {&quot;entityId&quot;: &quot;21673341369&quot;, &quot;endOfRange&quot;: 8325}, {&quot;entityId&quot;: &quot;21673341369&quot;, &quot;endOfRange&quot;: 9330}, {&quot;entityId&quot;: &quot;21673341369&quot;, &quot;endOfRange&quot;: 10000}], &quot;forcedVariations&quot;: {&quot;409007617793ebd1e12654adf87047d0&quot;: &quot;growth&quot;, &quot;3977d8a7a265a13d734f3edf9226214c&quot;: &quot;primer&quot;, &quot;bcf588169e3ac842af083a5a54708563&quot;: &quot;growth&quot;}}], &quot;version&quot;: &quot;4&quot;, &quot;audiences&quot;: [{&quot;conditions&quot;: &quot;[\&quot;or\&quot;, {\&quot;match\&quot;: \&quot;exact\&quot;, \&quot;name\&quot;: \&quot;$opt_dummy_attribute\&quot;, \&quot;type\&quot;: \&quot;custom_attribute\&quot;, \&quot;value\&quot;: \&quot;$opt_dummy_value\&quot;}]&quot;, &quot;id&quot;: &quot;$opt_dummy_audience&quot;, &quot;name&quot;: &quot;Optimizely-Generated Audience for Backwards Compatibility&quot;}], &quot;anonymizeIP&quot;: true, &quot;sdkKey&quot;: &quot;WTc6awnGuYDdG98CYRban&quot;, &quot;attributes&quot;: [{&quot;id&quot;: &quot;16822470375&quot;, &quot;key&quot;: &quot;user_id&quot;}, {&quot;id&quot;: &quot;17143601254&quot;, &quot;key&quot;: &quot;spammy&quot;}, {&quot;id&quot;: &quot;18175660309&quot;, &quot;key&quot;: &quot;organization_plan&quot;}, {&quot;id&quot;: &quot;18813001570&quot;, &quot;key&quot;: &quot;is_logged_in&quot;}, {&quot;id&quot;: &quot;19073851829&quot;, &quot;key&quot;: &quot;geo&quot;}, {&quot;id&quot;: &quot;20175462351&quot;, &quot;key&quot;: &quot;requestedCurrency&quot;}, {&quot;id&quot;: &quot;20785470195&quot;, &quot;key&quot;: &quot;country_code&quot;}, {&quot;id&quot;: &quot;21656311196&quot;, &quot;key&quot;: &quot;opened_downgrade_dialog&quot;}], &quot;botFiltering&quot;: false, &quot;accountId&quot;: &quot;16737760170&quot;, &quot;events&quot;: [{&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;17911811441&quot;, &quot;key&quot;: &quot;hydro_click.dashboard.teacher_toolbox_cta&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18124116703&quot;, &quot;key&quot;: &quot;submit.organizations.complete_sign_up&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18145892387&quot;, &quot;key&quot;: &quot;no_metric.tracked_outside_of_optimizely&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18178755568&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.add_repo&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18180553241&quot;, &quot;key&quot;: &quot;submit.repository_imports.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18186103728&quot;, &quot;key&quot;: &quot;click.help.learn_more_about_repository_creation&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18188530140&quot;, &quot;key&quot;: &quot;test_event&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18191963644&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.transfer_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18195612788&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.import_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18210945499&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.invite_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18211063248&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.create_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18215721889&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.update_profile&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18224360785&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.dismiss&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18234832286&quot;, &quot;key&quot;: &quot;submit.organization_activation.complete&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18252392383&quot;, &quot;key&quot;: &quot;submit.org_repository.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18257551537&quot;, &quot;key&quot;: &quot;submit.org_member_invitation.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18259522260&quot;, &quot;key&quot;: &quot;submit.organization_profile.update&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18564603625&quot;, &quot;key&quot;: &quot;view.classroom_select_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18568612016&quot;, &quot;key&quot;: &quot;click.classroom_sign_in_click&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18572592540&quot;, &quot;key&quot;: &quot;view.classroom_name&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18574203855&quot;, &quot;key&quot;: &quot;click.classroom_create_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18582053415&quot;, &quot;key&quot;: &quot;click.classroom_select_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18589463420&quot;, &quot;key&quot;: &quot;click.classroom_create_classroom&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18591323364&quot;, &quot;key&quot;: &quot;click.classroom_create_first_classroom&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18591652321&quot;, &quot;key&quot;: &quot;click.classroom_grant_access&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18607131425&quot;, &quot;key&quot;: &quot;view.classroom_creation&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18831680583&quot;, &quot;key&quot;: &quot;upgrade_account_plan&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19064064515&quot;, &quot;key&quot;: &quot;click.signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19075373687&quot;, &quot;key&quot;: &quot;click.view_account_billing_page&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19077355841&quot;, &quot;key&quot;: &quot;click.dismiss_signup_prompt&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19079713938&quot;, &quot;key&quot;: &quot;click.contact_sales&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19120963070&quot;, &quot;key&quot;: &quot;click.compare_account_plans&quot;}, {&quot;experimentIds&quot;: [&quot;21685100630&quot;], &quot;id&quot;: &quot;19151690317&quot;, &quot;key&quot;: &quot;click.upgrade_account_cta&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19424193129&quot;, &quot;key&quot;: &quot;click.open_account_switcher&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19520330825&quot;, &quot;key&quot;: &quot;click.visit_account_profile&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19540970635&quot;, &quot;key&quot;: &quot;click.switch_account_context&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19730198868&quot;, &quot;key&quot;: &quot;submit.homepage_signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19820830627&quot;, &quot;key&quot;: &quot;click.homepage_signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19988571001&quot;, &quot;key&quot;: &quot;click.create_enterprise_trial&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20036538294&quot;, &quot;key&quot;: &quot;click.create_organization_team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20040653299&quot;, &quot;key&quot;: &quot;click.input_enterprise_trial_form&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20062030003&quot;, &quot;key&quot;: &quot;click.continue_with_team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20068947153&quot;, &quot;key&quot;: &quot;click.create_organization_free&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20086636658&quot;, &quot;key&quot;: &quot;click.signup_continue.username&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20091648988&quot;, &quot;key&quot;: &quot;click.signup_continue.create_account&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20103637615&quot;, &quot;key&quot;: &quot;click.signup_continue.email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20111574253&quot;, &quot;key&quot;: &quot;click.signup_continue.password&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20120044111&quot;, &quot;key&quot;: &quot;view.pricing_page&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20152062109&quot;, &quot;key&quot;: &quot;submit.create_account&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20165800992&quot;, &quot;key&quot;: &quot;submit.upgrade_payment_form&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20171520319&quot;, &quot;key&quot;: &quot;submit.create_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20222645674&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.discuss_your_needs&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20227443657&quot;, &quot;key&quot;: &quot;submit.verify_primary_user_email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20234607160&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.try_enterprise&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20238175784&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20239847212&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.continue_free&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20251097193&quot;, &quot;key&quot;: &quot;recommended_plan&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20438619534&quot;, &quot;key&quot;: &quot;click.pricing_calculator.1_member&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20456699683&quot;, &quot;key&quot;: &quot;click.pricing_calculator.15_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20467868331&quot;, &quot;key&quot;: &quot;click.pricing_calculator.10_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20476267432&quot;, &quot;key&quot;: &quot;click.trial_days_remaining&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20476357660&quot;, &quot;key&quot;: &quot;click.discover_feature&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20479287901&quot;, &quot;key&quot;: &quot;click.pricing_calculator.custom_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20481107083&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.apply_teacher_benefits&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20483089392&quot;, &quot;key&quot;: &quot;click.pricing_calculator.5_members&quot;}, {&quot;experimentIds&quot;: [&quot;20652570897&quot;], &quot;id&quot;: &quot;20484283944&quot;, &quot;key&quot;: &quot;click.onboarding_task&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20484996281&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.apply_student_benefits&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20486713726&quot;, &quot;key&quot;: &quot;click.onboarding_task_breadcrumb&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20490791319&quot;, &quot;key&quot;: &quot;click.upgrade_to_enterprise&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20491786766&quot;, &quot;key&quot;: &quot;click.talk_to_us&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20494144087&quot;, &quot;key&quot;: &quot;click.dismiss_enterprise_trial&quot;}, {&quot;experimentIds&quot;: [&quot;20652570897&quot;], &quot;id&quot;: &quot;20499722759&quot;, &quot;key&quot;: &quot;completed_all_tasks&quot;}, {&quot;experimentIds&quot;: [&quot;20652570897&quot;], &quot;id&quot;: &quot;20500710104&quot;, &quot;key&quot;: &quot;completed_onboarding_tasks&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20513160672&quot;, &quot;key&quot;: &quot;click.read_doc&quot;}, {&quot;experimentIds&quot;: [&quot;20652570897&quot;], &quot;id&quot;: &quot;20516196762&quot;, &quot;key&quot;: &quot;actions_enabled&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20518980986&quot;, &quot;key&quot;: &quot;click.dismiss_trial_banner&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20535446721&quot;, &quot;key&quot;: &quot;click.issue_actions_prompt.dismiss_prompt&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20557002247&quot;, &quot;key&quot;: &quot;click.issue_actions_prompt.setup_workflow&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20595070227&quot;, &quot;key&quot;: &quot;click.pull_request_setup_workflow&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20626600314&quot;, &quot;key&quot;: &quot;click.seats_input&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20642310305&quot;, &quot;key&quot;: &quot;click.decrease_seats_number&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20662990045&quot;, &quot;key&quot;: &quot;click.increase_seats_number&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20679620969&quot;, &quot;key&quot;: &quot;click.public_product_roadmap&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20761240940&quot;, &quot;key&quot;: &quot;click.dismiss_survey_banner&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20767210721&quot;, &quot;key&quot;: &quot;click.take_survey&quot;}, {&quot;experimentIds&quot;: [&quot;20652570897&quot;], &quot;id&quot;: &quot;20795281201&quot;, &quot;key&quot;: &quot;click.archive_list&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20966790249&quot;, &quot;key&quot;: &quot;contact_sales.submit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20996500333&quot;, &quot;key&quot;: &quot;contact_sales.existing_customer&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20996890162&quot;, &quot;key&quot;: &quot;contact_sales.blank_message_field&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21000470317&quot;, &quot;key&quot;: &quot;contact_sales.personal_email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21002790172&quot;, &quot;key&quot;: &quot;contact_sales.blank_phone_field&quot;}, {&quot;experimentIds&quot;: [&quot;21445030708&quot;], &quot;id&quot;: &quot;21354412592&quot;, &quot;key&quot;: &quot;click.dismiss_create_readme&quot;}, {&quot;experimentIds&quot;: [&quot;21445030708&quot;], &quot;id&quot;: &quot;21366102546&quot;, &quot;key&quot;: &quot;click.dismiss_zero_user_content&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21370252505&quot;, &quot;key&quot;: &quot;account_did_downgrade&quot;}, {&quot;experimentIds&quot;: [&quot;21445030708&quot;], &quot;id&quot;: &quot;21370840408&quot;, &quot;key&quot;: &quot;click.cta_create_readme&quot;}, {&quot;experimentIds&quot;: [&quot;21445030708&quot;], &quot;id&quot;: &quot;21375451068&quot;, &quot;key&quot;: &quot;click.cta_create_new_repository&quot;}, {&quot;experimentIds&quot;: [&quot;21445030708&quot;], &quot;id&quot;: &quot;21385390948&quot;, &quot;key&quot;: &quot;click.zero_user_content&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21467712175&quot;, &quot;key&quot;: &quot;click.downgrade_keep&quot;}, {&quot;experimentIds&quot;: [&quot;21486342806&quot;], &quot;id&quot;: &quot;21484112202&quot;, &quot;key&quot;: &quot;click.downgrade&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21495292213&quot;, &quot;key&quot;: &quot;click.downgrade_survey_exit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21508241468&quot;, &quot;key&quot;: &quot;click.downgrade_survey_submit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21512030356&quot;, &quot;key&quot;: &quot;click.downgrade_support&quot;}, {&quot;experimentIds&quot;: [&quot;21486342806&quot;], &quot;id&quot;: &quot;21539090022&quot;, &quot;key&quot;: &quot;click.downgrade_exit&quot;}, {&quot;experimentIds&quot;: [&quot;21532540507&quot;], &quot;id&quot;: &quot;21543640644&quot;, &quot;key&quot;: &quot;click_fetch_upstream&quot;}, {&quot;experimentIds&quot;: [&quot;21685100630&quot;], &quot;id&quot;: &quot;21646510300&quot;, &quot;key&quot;: &quot;click.move_your_work&quot;}, {&quot;experimentIds&quot;: [&quot;21685100630&quot;], &quot;id&quot;: &quot;21656151116&quot;, &quot;key&quot;: &quot;click.add_branch_protection_rule&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21663860599&quot;, &quot;key&quot;: &quot;click.downgrade_dialog_open&quot;}, {&quot;experimentIds&quot;: [&quot;21685100630&quot;], &quot;id&quot;: &quot;21687860483&quot;, &quot;key&quot;: &quot;click.learn_about_protected_branches&quot;}, {&quot;experimentIds&quot;: [&quot;21685100630&quot;], &quot;id&quot;: &quot;21689050333&quot;, &quot;key&quot;: &quot;click.dismiss_protect_this_branch&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21864370109&quot;, &quot;key&quot;: &quot;click.sign_in&quot;}], &quot;revision&quot;: &quot;1339&quot;}" />
 
-static bool ts_lex(TSLexer *lexer, TSStateId state) {
-  START_LEXER();
-  eof = lexer->eof(lexer);
-  switch (state) {
-    case 0:
-      if (eof) ADVANCE(14);
-      if (lookahead == '!') ADVANCE(48);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '%') ADVANCE(35);
-      if (lookahead == '&') ADVANCE(5);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ')') ADVANCE(16);
-      if (lookahead == '*') ADVANCE(34);
-      if (lookahead == '+') ADVANCE(30);
-      if (lookahead == ',') ADVANCE(27);
-      if (lookahead == '-') ADVANCE(32);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == '/') ADVANCE(33);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == ';') ADVANCE(59);
-      if (lookahead == '<') ADVANCE(42);
-      if (lookahead == '=') ADVANCE(46);
-      if (lookahead == '>') ADVANCE(44);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '[') ADVANCE(19);
-      if (lookahead == ']') ADVANCE(20);
-      if (lookahead == 'a') ADVANCE(54);
-      if (lookahead == 'l') ADVANCE(53);
-      if (lookahead == '{') ADVANCE(17);
-      if (lookahead == '|') ADVANCE(23);
-      if (lookahead == '}') ADVANCE(18);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(0)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('b' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 1:
-      if (lookahead == '!') ADVANCE(47);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ')') ADVANCE(16);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '[') ADVANCE(19);
-      if (lookahead == ']') ADVANCE(20);
-      if (lookahead == '{') ADVANCE(17);
-      if (lookahead == '|') ADVANCE(22);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(1)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 2:
-      if (lookahead == '!') ADVANCE(8);
-      if (lookahead == '%') ADVANCE(35);
-      if (lookahead == '&') ADVANCE(5);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ')') ADVANCE(16);
-      if (lookahead == '*') ADVANCE(34);
-      if (lookahead == '+') ADVANCE(30);
-      if (lookahead == ',') ADVANCE(27);
-      if (lookahead == '-') ADVANCE(31);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == '/') ADVANCE(33);
-      if (lookahead == '<') ADVANCE(42);
-      if (lookahead == '=') ADVANCE(10);
-      if (lookahead == '>') ADVANCE(44);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '|') ADVANCE(23);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(2)
-      END_STATE();
-    case 3:
-      if (lookahead == '!') ADVANCE(7);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '|') ADVANCE(22);
-      if (lookahead == '}') ADVANCE(18);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(3)
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 4:
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') ADVANCE(51);
-      if (lookahead != 0) ADVANCE(51);
-      END_STATE();
-    case 5:
-      if (lookahead == '&') ADVANCE(40);
-      END_STATE();
-    case 6:
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') ADVANCE(52);
-      if (lookahead != 0) ADVANCE(52);
-      END_STATE();
-    case 7:
-      if (lookahead == '.') ADVANCE(26);
-      END_STATE();
-    case 8:
-      if (lookahead == '.') ADVANCE(26);
-      if (lookahead == '=') ADVANCE(38);
-      END_STATE();
-    case 9:
-      if (lookahead == '.') ADVANCE(25);
-      END_STATE();
-    case 10:
-      if (lookahead == '=') ADVANCE(36);
-      END_STATE();
-    case 11:
-      if (eof) ADVANCE(14);
-      if (lookahead == '!') ADVANCE(48);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '%') ADVANCE(35);
-      if (lookahead == '&') ADVANCE(5);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ')') ADVANCE(16);
-      if (lookahead == '*') ADVANCE(34);
-      if (lookahead == '+') ADVANCE(30);
-      if (lookahead == ',') ADVANCE(27);
-      if (lookahead == '-') ADVANCE(32);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == '/') ADVANCE(33);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == '<') ADVANCE(42);
-      if (lookahead == '=') ADVANCE(46);
-      if (lookahead == '>') ADVANCE(44);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '[') ADVANCE(19);
-      if (lookahead == 'l') ADVANCE(53);
-      if (lookahead == '{') ADVANCE(17);
-      if (lookahead == '|') ADVANCE(23);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(11)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 12:
-      if (eof) ADVANCE(14);
-      if (lookahead == '!') ADVANCE(47);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ')') ADVANCE(16);
-      if (lookahead == ',') ADVANCE(27);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == ';') ADVANCE(59);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '[') ADVANCE(19);
-      if (lookahead == 'l') ADVANCE(53);
-      if (lookahead == '{') ADVANCE(17);
-      if (lookahead == '|') ADVANCE(22);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(12)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 13:
-      if (eof) ADVANCE(14);
-      if (lookahead == '!') ADVANCE(47);
-      if (lookahead == '"') ADVANCE(29);
-      if (lookahead == '\'') ADVANCE(28);
-      if (lookahead == '(') ADVANCE(15);
-      if (lookahead == ',') ADVANCE(27);
-      if (lookahead == '.') ADVANCE(24);
-      if (lookahead == ':') ADVANCE(21);
-      if (lookahead == ';') ADVANCE(59);
-      if (lookahead == '?') ADVANCE(9);
-      if (lookahead == '[') ADVANCE(19);
-      if (lookahead == 'a') ADVANCE(54);
-      if (lookahead == 'l') ADVANCE(53);
-      if (lookahead == '{') ADVANCE(17);
-      if (lookahead == '|') ADVANCE(22);
-      if (lookahead == '\t' ||
-          lookahead == '\n' ||
-          lookahead == '\r' ||
-          lookahead == ' ') SKIP(13)
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('b' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 14:
-      ACCEPT_TOKEN(ts_builtin_sym_end);
-      END_STATE();
-    case 15:
-      ACCEPT_TOKEN(anon_sym_LPAREN);
-      END_STATE();
-    case 16:
-      ACCEPT_TOKEN(anon_sym_RPAREN);
-      END_STATE();
-    case 17:
-      ACCEPT_TOKEN(anon_sym_LBRACE);
-      END_STATE();
-    case 18:
-      ACCEPT_TOKEN(anon_sym_RBRACE);
-      END_STATE();
-    case 19:
-      ACCEPT_TOKEN(anon_sym_LBRACK);
-      END_STATE();
-    case 20:
-      ACCEPT_TOKEN(anon_sym_RBRACK);
-      END_STATE();
-    case 21:
-      ACCEPT_TOKEN(anon_sym_COLON);
-      END_STATE();
-    case 22:
-      ACCEPT_TOKEN(anon_sym_PIPE);
-      END_STATE();
-    case 23:
-      ACCEPT_TOKEN(anon_sym_PIPE);
-      if (lookahead == '|') ADVANCE(41);
-      END_STATE();
-    case 24:
-      ACCEPT_TOKEN(anon_sym_DOT);
-      END_STATE();
-    case 25:
-      ACCEPT_TOKEN(anon_sym_QMARK_DOT);
-      END_STATE();
-    case 26:
-      ACCEPT_TOKEN(anon_sym_BANG_DOT);
-      END_STATE();
-    case 27:
-      ACCEPT_TOKEN(anon_sym_COMMA);
-      END_STATE();
-    case 28:
-      ACCEPT_TOKEN(sym__single_quote);
-      END_STATE();
-    case 29:
-      ACCEPT_TOKEN(sym__double_quote);
-      END_STATE();
-    case 30:
-      ACCEPT_TOKEN(anon_sym_PLUS);
-      END_STATE();
-    case 31:
-      ACCEPT_TOKEN(anon_sym_DASH);
-      END_STATE();
-    case 32:
-      ACCEPT_TOKEN(anon_sym_DASH);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 33:
-      ACCEPT_TOKEN(anon_sym_SLASH);
-      END_STATE();
-    case 34:
-      ACCEPT_TOKEN(anon_sym_STAR);
-      END_STATE();
-    case 35:
-      ACCEPT_TOKEN(anon_sym_PERCENT);
-      END_STATE();
-    case 36:
-      ACCEPT_TOKEN(anon_sym_EQ_EQ);
-      if (lookahead == '=') ADVANCE(37);
-      END_STATE();
-    case 37:
-      ACCEPT_TOKEN(anon_sym_EQ_EQ_EQ);
-      END_STATE();
-    case 38:
-      ACCEPT_TOKEN(anon_sym_BANG_EQ);
-      if (lookahead == '=') ADVANCE(39);
-      END_STATE();
-    case 39:
-      ACCEPT_TOKEN(anon_sym_BANG_EQ_EQ);
-      END_STATE();
-    case 40:
-      ACCEPT_TOKEN(anon_sym_AMP_AMP);
-      END_STATE();
-    case 41:
-      ACCEPT_TOKEN(anon_sym_PIPE_PIPE);
-      END_STATE();
-    case 42:
-      ACCEPT_TOKEN(anon_sym_LT);
-      if (lookahead == '=') ADVANCE(43);
-      END_STATE();
-    case 43:
-      ACCEPT_TOKEN(anon_sym_LT_EQ);
-      END_STATE();
-    case 44:
-      ACCEPT_TOKEN(anon_sym_GT);
-      if (lookahead == '=') ADVANCE(45);
-      END_STATE();
-    case 45:
-      ACCEPT_TOKEN(anon_sym_GT_EQ);
-      END_STATE();
-    case 46:
-      ACCEPT_TOKEN(anon_sym_EQ);
-      if (lookahead == '=') ADVANCE(36);
-      END_STATE();
-    case 47:
-      ACCEPT_TOKEN(anon_sym_BANG);
-      if (lookahead == '.') ADVANCE(26);
-      END_STATE();
-    case 48:
-      ACCEPT_TOKEN(anon_sym_BANG);
-      if (lookahead == '.') ADVANCE(26);
-      if (lookahead == '=') ADVANCE(38);
-      END_STATE();
-    case 49:
-      ACCEPT_TOKEN(sym_number);
-      if (lookahead == '.') ADVANCE(50);
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(49);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 50:
-      ACCEPT_TOKEN(sym_number);
-      if (('0' <= lookahead && lookahead <= '9')) ADVANCE(50);
-      END_STATE();
-    case 51:
-      ACCEPT_TOKEN(aux_sym_string_token1);
-      END_STATE();
-    case 52:
-      ACCEPT_TOKEN(aux_sym_string_token2);
-      END_STATE();
-    case 53:
-      ACCEPT_TOKEN(sym_identifier);
-      if (lookahead == 'e') ADVANCE(55);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 54:
-      ACCEPT_TOKEN(sym_identifier);
-      if (lookahead == 's') ADVANCE(57);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 55:
-      ACCEPT_TOKEN(sym_identifier);
-      if (lookahead == 't') ADVANCE(58);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 56:
-      ACCEPT_TOKEN(sym_identifier);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 57:
-      ACCEPT_TOKEN(anon_sym_as);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 58:
-      ACCEPT_TOKEN(anon_sym_let);
-      if (lookahead == '$' ||
-          lookahead == '-' ||
-          ('0' <= lookahead && lookahead <= '9') ||
-          ('A' <= lookahead && lookahead <= 'Z') ||
-          lookahead == '_' ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
-      END_STATE();
-    case 59:
-      ACCEPT_TOKEN(anon_sym_SEMI);
-      END_STATE();
-    default:
-      return false;
-  }
-}
 
-static TSLexMode ts_lex_modes[STATE_COUNT] = {
-  [0] = {.lex_state = 0},
-  [1] = {.lex_state = 12},
-  [2] = {.lex_state = 11},
-  [3] = {.lex_state = 11},
-  [4] = {.lex_state = 11},
-  [5] = {.lex_state = 11},
-  [6] = {.lex_state = 11},
-  [7] = {.lex_state = 11},
-  [8] = {.lex_state = 11},
-  [9] = {.lex_state = 11},
-  [10] = {.lex_state = 11},
-  [11] = {.lex_state = 11},
-  [12] = {.lex_state = 11},
-  [13] = {.lex_state = 11},
-  [14] = {.lex_state = 11},
-  [15] = {.lex_state = 12},
-  [16] = {.lex_state = 12},
-  [17] = {.lex_state = 2},
-  [18] = {.lex_state = 2},
-  [19] = {.lex_state = 2},
-  [20] = {.lex_state = 2},
-  [21] = {.lex_state = 2},
-  [22] = {.lex_state = 2},
-  [23] = {.lex_state = 2},
-  [24] = {.lex_state = 2},
-  [25] = {.lex_state = 2},
-  [26] = {.lex_state = 2},
-  [27] = {.lex_state = 2},
-  [28] = {.lex_state = 2},
-  [29] = {.lex_state = 2},
-  [30] = {.lex_state = 1},
-  [31] = {.lex_state = 1},
-  [32] = {.lex_state = 1},
-  [33] = {.lex_state = 1},
-  [34] = {.lex_state = 1},
-  [35] = {.lex_state = 1},
-  [36] = {.lex_state = 1},
-  [37] = {.lex_state = 1},
-  [38] = {.lex_state = 1},
-  [39] = {.lex_state = 1},
-  [40] = {.lex_state = 1},
-  [41] = {.lex_state = 1},
-  [42] = {.lex_state = 1},
-  [43] = {.lex_state = 1},
-  [44] = {.lex_state = 1},
-  [45] = {.lex_state = 1},
-  [46] = {.lex_state = 1},
-  [47] = {.lex_state = 1},
-  [48] = {.lex_state = 1},
-  [49] = {.lex_state = 1},
-  [50] = {.lex_state = 1},
-  [51] = {.lex_state = 1},
-  [52] = {.lex_state = 1},
-  [53] = {.lex_state = 1},
-  [54] = {.lex_state = 1},
-  [55] = {.lex_state = 1},
-  [56] = {.lex_state = 13},
-  [57] = {.lex_state = 13},
-  [58] = {.lex_state = 13},
-  [59] = {.lex_state = 13},
-  [60] = {.lex_state = 13},
-  [61] = {.lex_state = 13},
-  [62] = {.lex_state = 1},
-  [63] = {.lex_state = 13},
-  [64] = {.lex_state = 13},
-  [65] = {.lex_state = 13},
-  [66] = {.lex_state = 13},
-  [67] = {.lex_state = 13},
-  [68] = {.lex_state = 13},
-  [69] = {.lex_state = 13},
-  [70] = {.lex_state = 13},
-  [71] = {.lex_state = 13},
-  [72] = {.lex_state = 13},
-  [73] = {.lex_state = 12},
-  [74] = {.lex_state = 12},
-  [75] = {.lex_state = 1},
-  [76] = {.lex_state = 12},
-  [77] = {.lex_state = 13},
-  [78] = {.lex_state = 1},
-  [79] = {.lex_state = 1},
-  [80] = {.lex_state = 12},
-  [81] = {.lex_state = 12},
-  [82] = {.lex_state = 12},
-  [83] = {.lex_state = 12},
-  [84] = {.lex_state = 12},
-  [85] = {.lex_state = 12},
-  [86] = {.lex_state = 12},
-  [87] = {.lex_state = 12},
-  [88] = {.lex_state = 12},
-  [89] = {.lex_state = 13},
-  [90] = {.lex_state = 12},
-  [91] = {.lex_state = 1},
-  [92] = {.lex_state = 12},
-  [93] = {.lex_state = 1},
-  [94] = {.lex_state = 13},
-  [95] = {.lex_state = 1},
-  [96] = {.lex_state = 1},
-  [97] = {.lex_state = 1},
-  [98] = {.lex_state = 1},
-  [99] = {.lex_state = 13},
-  [100] = {.lex_state = 1},
-  [101] = {.lex_state = 1},
-  [102] = {.lex_state = 12},
-  [103] = {.lex_state = 13},
-  [104] = {.lex_state = 1},
-  [105] = {.lex_state = 1},
-  [106] = {.lex_state = 1},
-  [107] = {.lex_state = 1},
-  [108] = {.lex_state = 12},
-  [109] = {.lex_state = 1},
-  [110] = {.lex_state = 1},
-  [111] = {.lex_state = 1},
-  [112] = {.lex_state = 1},
-  [113] = {.lex_state = 1},
-  [114] = {.lex_state = 1},
-  [115] = {.lex_state = 1},
-  [116] = {.lex_state = 1},
-  [117] = {.lex_state = 1},
-  [118] = {.lex_state = 13},
-  [119] = {.lex_state = 1},
-  [120] = {.lex_state = 1},
-  [121] = {.lex_state = 1},
-  [122] = {.lex_state = 12},
-  [123] = {.lex_state = 12},
-  [124] = {.lex_state = 1},
-  [125] = {.lex_state = 12},
-  [126] = {.lex_state = 1},
-  [127] = {.lex_state = 12},
-  [128] = {.lex_state = 12},
-  [129] = {.lex_state = 12},
-  [130] = {.lex_state = 13},
-  [131] = {.lex_state = 12},
-  [132] = {.lex_state = 12},
-  [133] = {.lex_state = 12},
-  [134] = {.lex_state = 12},
-  [135] = {.lex_state = 12},
-  [136] = {.lex_state = 12},
-  [137] = {.lex_state = 12},
-  [138] = {.lex_state = 12},
-  [139] = {.lex_state = 12},
-  [140] = {.lex_state = 1},
-  [141] = {.lex_state = 1},
-  [142] = {.lex_state = 3},
-  [143] = {.lex_state = 1},
-  [144] = {.lex_state = 12},
-  [145] = {.lex_state = 3},
-  [146] = {.lex_state = 1},
-  [147] = {.lex_state = 1},
-  [148] = {.lex_state = 3},
-  [149] = {.lex_state = 3},
-  [150] = {.lex_state = 3},
-  [151] = {.lex_state = 3},
-  [152] = {.lex_state = 3},
-  [153] = {.lex_state = 3},
-  [154] = {.lex_state = 3},
-  [155] = {.lex_state = 3},
-  [156] = {.lex_state = 3},
-  [157] = {.lex_state = 3},
-  [158] = {.lex_state = 3},
-  [159] = {.lex_state = 3},
-  [160] = {.lex_state = 1},
-  [161] = {.lex_state = 3},
-  [162] = {.lex_state = 3},
-  [163] = {.lex_state = 0},
-  [164] = {.lex_state = 0},
-  [165] = {.lex_state = 1},
-  [166] = {.lex_state = 0},
-  [167] = {.lex_state = 3},
-  [168] = {.lex_state = 3},
-  [169] = {.lex_state = 3},
-  [170] = {.lex_state = 3},
-  [171] = {.lex_state = 3},
-  [172] = {.lex_state = 3},
-  [173] = {.lex_state = 3},
-  [174] = {.lex_state = 3},
-  [175] = {.lex_state = 3},
-  [176] = {.lex_state = 3},
-  [177] = {.lex_state = 3},
-  [178] = {.lex_state = 3},
-  [179] = {.lex_state = 3},
-  [180] = {.lex_state = 0},
-  [181] = {.lex_state = 0},
-  [182] = {.lex_state = 3},
-  [183] = {.lex_state = 3},
-  [184] = {.lex_state = 0},
-  [185] = {.lex_state = 0},
-  [186] = {.lex_state = 3},
-  [187] = {.lex_state = 3},
-  [188] = {.lex_state = 0},
-  [189] = {.lex_state = 3},
-  [190] = {.lex_state = 3},
-  [191] = {.lex_state = 3},
-  [192] = {.lex_state = 0},
-  [193] = {.lex_state = 0},
-  [194] = {.lex_state = 6},
-  [195] = {.lex_state = 6},
-  [196] = {.lex_state = 4},
-  [197] = {.lex_state = 6},
-  [198] = {.lex_state = 6},
-  [199] = {.lex_state = 4},
-  [200] = {.lex_state = 0},
-  [201] = {.lex_state = 6},
-  [202] = {.lex_state = 4},
-  [203] = {.lex_state = 0},
-  [204] = {.lex_state = 4},
-  [205] = {.lex_state = 0},
-  [206] = {.lex_state = 4},
-  [207] = {.lex_state = 6},
-  [208] = {.lex_state = 4},
-  [209] = {.lex_state = 6},
-  [210] = {.lex_state = 6},
-  [211] = {.lex_state = 4},
-  [212] = {.lex_state = 6},
-  [213] = {.lex_state = 4},
-  [214] = {.lex_state = 6},
-  [215] = {.lex_state = 4},
-  [216] = {.lex_state = 6},
-  [217] = {.lex_state = 4},
-  [218] = {.lex_state = 4},
-  [219] = {.lex_state = 6},
-  [220] = {.lex_state = 4},
-  [221] = {.lex_state = 6},
-  [222] = {.lex_state = 4},
-  [223] = {.lex_state = 3},
-  [224] = {.lex_state = 3},
-  [225] = {.lex_state = 3},
-  [226] = {.lex_state = 3},
-  [227] = {.lex_state = 3},
-  [228] = {.lex_state = 3},
-  [229] = {.lex_state = 3},
-  [230] = {.lex_state = 0},
-  [231] = {.lex_state = 3},
-  [232] = {.lex_state = 0},
-  [233] = {.lex_state = 3},
-  [234] = {.lex_state = 0},
-  [235] = {.lex_state = 0},
-  [236] = {.lex_state = 3},
-  [237] = {.lex_state = 0},
-  [238] = {.lex_state = 0},
-  [239] = {.lex_state = 0},
-  [240] = {.lex_state = 0},
-  [241] = {.lex_state = 0},
-  [242] = {.lex_state = 0},
-  [243] = {.lex_state = 0},
-  [244] = {.lex_state = 3},
-  [245] = {.lex_state = 0},
-  [246] = {.lex_state = 3},
-  [247] = {.lex_state = 3},
-  [248] = {.lex_state = 3},
-  [249] = {.lex_state = 0},
-  [250] = {.lex_state = 3},
-  [251] = {.lex_state = 0},
-};
+  <script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/wp-runtime-75f2f8745d85.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_manuelpuyol_turbo_dist_turbo_es2017-esm_js-8af9baefab9e.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_stacktrace-parser_dist_stack-trace-parser_esm_js-node_modules_github_bro-d351f6-c1d63d230b29.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/environment-24a2e0600736.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_selector-observer_dist_index_esm_js-650337916dbd.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_details-dialog-elemen-63debe-4a2f37f7419e.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_fzy_js_index_js-node_modules_github_combobox-nav_dist_index_js-node_modu-344bff-2d497eaa2bcd.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_filter-input-element_dist_index_js-node_modules_github_remote-inp-5333cf-5c635d3b6c5a.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_catalyst_lib_index_js-node_modules_github_time-elements_dist_index_js-38c36a597184.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_file-attachment-element_dist_index_js-node_modules_primer_view-co-b3d32f-0ca9333a679f.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/github-elements-92ca898a6e31.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/element-registry-513d00d32ce6.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_lit-html_lit-html_js-e954e8c01c93.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_mini-throttle_dist_index_js-node_modules_github_hotkey_dist_index-9f48bd-dd8913ac65b0.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_remote-form_dist_index_js-node_modules_github_catalyst_lib_index_-bd1f73-6256737c3b34.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_paste-markdown_dist_index_esm_js-node_modules_koddsson_textarea-c-586f78-31ae170ef9e1.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_quote-selection_dist_index_js-node_modules_github_session-resume_-332ba8-680cd0ecb5eb.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_soft-nav_navigate_ts-0349195a5b04.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_behaviors_keyboard-shortcuts-helper_ts-app_assets_modules_github_di-9b8a64-283dc3d9bdf7.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_behaviors_task-list_ts-app_assets_modules_github_has-interactions_t-0091d6-25db6ca89f1c.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_behaviors_details_ts-app_assets_modules_github_updatable-content_ts-fa5b522d20fc.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_behaviors_commenting_edit_ts-app_assets_modules_github_behaviors_ht-83c235-db7959b5fff9.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/behaviors-8648c93527cd.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_catalyst_lib_index_js-06ff533-b01316754e20.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/notifications-global-47ba35d34d1d.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_optimizely_optimizely-sdk_dist_optimizely_browser_es_min_js-node_modules-4de5ed-a1d36fafc3a7.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/optimizely-f39af1123cf3.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_virtualized-list_es_index_js-node_modules_github_template-parts_lib_index_js-17ccfc4926a4.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_mini-throttle_dist_decorators_js-node_modules_github_remote-form_-65a541-a6d62d7e3cc2.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_file-attachment-element_dist_index_js-node_modules_github_filter--8b2f15-7ffed05bafeb.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_ref-selector_ts-cc94df40876e.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/repositories-0a79f5c94737.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_diffs_blob-lines_ts-app_assets_modules_github_diffs_linkable-line-n-f314c3-347d734f1aea.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/diffs-e2b9e4bbb696.js"></script>
+  
 
-static uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
-  [0] = {
-    [ts_builtin_sym_end] = ACTIONS(1),
-    [anon_sym_LPAREN] = ACTIONS(1),
-    [anon_sym_RPAREN] = ACTIONS(1),
-    [anon_sym_LBRACE] = ACTIONS(1),
-    [anon_sym_RBRACE] = ACTIONS(1),
-    [anon_sym_LBRACK] = ACTIONS(1),
-    [anon_sym_RBRACK] = ACTIONS(1),
-    [anon_sym_COLON] = ACTIONS(1),
-    [anon_sym_PIPE] = ACTIONS(1),
-    [anon_sym_DOT] = ACTIONS(1),
-    [anon_sym_QMARK_DOT] = ACTIONS(1),
-    [anon_sym_BANG_DOT] = ACTIONS(1),
-    [anon_sym_COMMA] = ACTIONS(1),
-    [sym__single_quote] = ACTIONS(1),
-    [sym__double_quote] = ACTIONS(1),
-    [anon_sym_PLUS] = ACTIONS(1),
-    [anon_sym_DASH] = ACTIONS(1),
-    [anon_sym_SLASH] = ACTIONS(1),
-    [anon_sym_STAR] = ACTIONS(1),
-    [anon_sym_PERCENT] = ACTIONS(1),
-    [anon_sym_EQ_EQ] = ACTIONS(1),
-    [anon_sym_EQ_EQ_EQ] = ACTIONS(1),
-    [anon_sym_BANG_EQ] = ACTIONS(1),
-    [anon_sym_BANG_EQ_EQ] = ACTIONS(1),
-    [anon_sym_AMP_AMP] = ACTIONS(1),
-    [anon_sym_PIPE_PIPE] = ACTIONS(1),
-    [anon_sym_LT] = ACTIONS(1),
-    [anon_sym_LT_EQ] = ACTIONS(1),
-    [anon_sym_GT] = ACTIONS(1),
-    [anon_sym_GT_EQ] = ACTIONS(1),
-    [anon_sym_EQ] = ACTIONS(1),
-    [anon_sym_BANG] = ACTIONS(1),
-    [sym_number] = ACTIONS(1),
-    [sym_identifier] = ACTIONS(1),
-    [anon_sym_as] = ACTIONS(1),
-    [anon_sym_let] = ACTIONS(1),
-    [anon_sym_SEMI] = ACTIONS(1),
-  },
-  [1] = {
-    [sym_program] = STATE(243),
-    [sym__definition] = STATE(15),
-    [sym__any_expression] = STATE(15),
-    [sym_expression] = STATE(15),
-    [sym_group] = STATE(8),
-    [sym__primitive] = STATE(8),
-    [sym_object] = STATE(8),
-    [sym_array] = STATE(8),
-    [sym_member_expression] = STATE(8),
-    [sym_assignment_expression] = STATE(15),
-    [sym_unary_operator] = STATE(78),
-    [sym_unary_expression] = STATE(15),
-    [sym_binary_expression] = STATE(15),
-    [sym_string] = STATE(8),
-    [sym_call_expression] = STATE(8),
-    [sym_structural_declaration] = STATE(15),
-    [aux_sym_program_repeat1] = STATE(15),
-    [ts_builtin_sym_end] = ACTIONS(3),
-    [anon_sym_LPAREN] = ACTIONS(5),
-    [anon_sym_LBRACE] = ACTIONS(7),
-    [anon_sym_LBRACK] = ACTIONS(9),
-    [sym__single_quote] = ACTIONS(11),
-    [sym__double_quote] = ACTIONS(13),
-    [anon_sym_BANG] = ACTIONS(15),
-    [sym_number] = ACTIONS(17),
-    [sym_identifier] = ACTIONS(19),
-    [anon_sym_let] = ACTIONS(21),
-  },
-};
+  <title>tree-sitter-typescript/parser.c at master · tree-sitter/tree-sitter-typescript · GitHub</title>
 
-static uint16_t ts_small_parse_table[] = {
-  [0] = 2,
-    ACTIONS(25), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(23), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [37] = 2,
-    ACTIONS(29), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(27), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [74] = 2,
-    ACTIONS(33), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(31), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [111] = 2,
-    ACTIONS(37), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(35), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [148] = 2,
-    ACTIONS(41), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(39), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [185] = 2,
-    ACTIONS(45), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(43), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [222] = 9,
-    ACTIONS(49), 1,
-      anon_sym_PIPE,
-    STATE(110), 1,
-      sym__binary_op,
-    STATE(131), 1,
-      aux_sym_pipe_sequence_repeat1,
-    STATE(136), 1,
-      sym_pipe_sequence,
-    ACTIONS(51), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(57), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(55), 5,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(47), 6,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-    ACTIONS(53), 10,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [273] = 2,
-    ACTIONS(61), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(59), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [310] = 2,
-    ACTIONS(65), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(63), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [347] = 2,
-    ACTIONS(69), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(67), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [384] = 2,
-    ACTIONS(73), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(71), 22,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [421] = 4,
-    ACTIONS(77), 1,
-      anon_sym_LPAREN,
-    ACTIONS(81), 1,
-      anon_sym_EQ,
-    ACTIONS(79), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(75), 18,
-      ts_builtin_sym_end,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [460] = 3,
-    ACTIONS(77), 1,
-      anon_sym_LPAREN,
-    ACTIONS(79), 10,
-      anon_sym_PIPE,
-      anon_sym_DASH,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(75), 18,
-      ts_builtin_sym_end,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_PLUS,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [496] = 13,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(17), 1,
-      sym_number,
-    ACTIONS(19), 1,
-      sym_identifier,
-    ACTIONS(21), 1,
-      anon_sym_let,
-    ACTIONS(83), 1,
-      ts_builtin_sym_end,
-    STATE(78), 1,
-      sym_unary_operator,
-    STATE(8), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-    STATE(16), 8,
-      sym__definition,
-      sym__any_expression,
-      sym_expression,
-      sym_assignment_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-      sym_structural_declaration,
-      aux_sym_program_repeat1,
-  [549] = 13,
-    ACTIONS(85), 1,
-      ts_builtin_sym_end,
-    ACTIONS(87), 1,
-      anon_sym_LPAREN,
-    ACTIONS(90), 1,
-      anon_sym_LBRACE,
-    ACTIONS(93), 1,
-      anon_sym_LBRACK,
-    ACTIONS(96), 1,
-      sym__single_quote,
-    ACTIONS(99), 1,
-      sym__double_quote,
-    ACTIONS(102), 1,
-      anon_sym_BANG,
-    ACTIONS(105), 1,
-      sym_number,
-    ACTIONS(108), 1,
-      sym_identifier,
-    ACTIONS(111), 1,
-      anon_sym_let,
-    STATE(78), 1,
-      sym_unary_operator,
-    STATE(8), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-    STATE(16), 8,
-      sym__definition,
-      sym__any_expression,
-      sym_expression,
-      sym_assignment_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-      sym_structural_declaration,
-      aux_sym_program_repeat1,
-  [602] = 8,
-    ACTIONS(47), 1,
-      anon_sym_RPAREN,
-    ACTIONS(114), 1,
-      anon_sym_PIPE,
-    STATE(100), 1,
-      sym__binary_op,
-    STATE(136), 1,
-      sym_pipe_sequence,
-    STATE(192), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(116), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(120), 4,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(118), 11,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [642] = 3,
-    ACTIONS(122), 1,
-      anon_sym_LPAREN,
-    ACTIONS(79), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(75), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [671] = 7,
-    ACTIONS(124), 1,
-      anon_sym_RPAREN,
-    ACTIONS(126), 1,
-      anon_sym_COMMA,
-    STATE(100), 1,
-      sym__binary_op,
-    STATE(203), 1,
-      aux_sym_arguments_repeat1,
-    ACTIONS(116), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(120), 4,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(118), 11,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [708] = 2,
-    ACTIONS(41), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(39), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [734] = 2,
-    ACTIONS(25), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(23), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [760] = 2,
-    ACTIONS(33), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(31), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [786] = 2,
-    ACTIONS(37), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(35), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [812] = 2,
-    ACTIONS(61), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(59), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [838] = 2,
-    ACTIONS(69), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(67), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [864] = 2,
-    ACTIONS(65), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(63), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [890] = 2,
-    ACTIONS(29), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(27), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [916] = 2,
-    ACTIONS(73), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(71), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [942] = 2,
-    ACTIONS(45), 5,
-      anon_sym_PIPE,
-      anon_sym_EQ_EQ,
-      anon_sym_BANG_EQ,
-      anon_sym_LT,
-      anon_sym_GT,
-    ACTIONS(43), 16,
-      anon_sym_RPAREN,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      anon_sym_PLUS,
-      anon_sym_DASH,
-      anon_sym_SLASH,
-      anon_sym_STAR,
-      anon_sym_PERCENT,
-      anon_sym_EQ_EQ_EQ,
-      anon_sym_BANG_EQ_EQ,
-      anon_sym_AMP_AMP,
-      anon_sym_PIPE_PIPE,
-      anon_sym_LT_EQ,
-      anon_sym_GT_EQ,
-  [968] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(130), 1,
-      anon_sym_RPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(251), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1015] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(150), 1,
-      anon_sym_RBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1060] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(160), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1105] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(240), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1148] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(164), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(32), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1193] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(166), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(36), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1238] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(168), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1283] = 11,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(17), 1,
-      sym_number,
-    ACTIONS(170), 1,
-      sym_identifier,
-    STATE(78), 1,
-      sym_unary_operator,
-    STATE(144), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(8), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1326] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(172), 1,
-      anon_sym_RPAREN,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(232), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1373] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(174), 1,
-      anon_sym_RPAREN,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(239), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1420] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(176), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(42), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1465] = 12,
-    ACTIONS(178), 1,
-      anon_sym_LPAREN,
-    ACTIONS(181), 1,
-      anon_sym_LBRACE,
-    ACTIONS(184), 1,
-      anon_sym_LBRACK,
-    ACTIONS(187), 1,
-      anon_sym_RBRACK,
-    ACTIONS(189), 1,
-      sym__single_quote,
-    ACTIONS(192), 1,
-      sym__double_quote,
-    ACTIONS(195), 1,
-      anon_sym_BANG,
-    ACTIONS(198), 1,
-      sym_number,
-    ACTIONS(201), 1,
-      sym_identifier,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1510] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(204), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1555] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(206), 1,
-      anon_sym_RPAREN,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(249), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1602] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(208), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1647] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(210), 1,
-      anon_sym_RPAREN,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(241), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1694] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(212), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(48), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1739] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(214), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(31), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1784] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(216), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(41), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1829] = 13,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(140), 1,
-      sym_number,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(218), 1,
-      anon_sym_RPAREN,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(242), 1,
-      sym_arguments,
-    STATE(205), 2,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(19), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1876] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(235), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1919] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(245), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [1962] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(238), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2005] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(234), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2048] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(128), 1,
-      anon_sym_LPAREN,
-    ACTIONS(132), 1,
-      anon_sym_LBRACE,
-    ACTIONS(134), 1,
-      anon_sym_LBRACK,
-    ACTIONS(136), 1,
-      sym__single_quote,
-    ACTIONS(138), 1,
-      sym__double_quote,
-    ACTIONS(142), 1,
-      sym_identifier,
-    ACTIONS(162), 1,
-      sym_number,
-    STATE(79), 1,
-      sym_unary_operator,
-    STATE(237), 4,
-      sym__any_expression,
-      sym_expression,
-      sym_unary_expression,
-      sym_binary_expression,
-    STATE(17), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2091] = 12,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(220), 1,
-      anon_sym_RBRACK,
-    STATE(91), 1,
-      sym_unary_operator,
-    STATE(44), 3,
-      sym_expression,
-      sym_unary_expression,
-      aux_sym_array_repeat1,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2136] = 6,
-    ACTIONS(222), 1,
-      anon_sym_PIPE,
-    STATE(77), 1,
-      aux_sym_pipe_sequence_repeat1,
-    STATE(130), 1,
-      sym_pipe_sequence,
-    ACTIONS(224), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(57), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(47), 8,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2168] = 2,
-    ACTIONS(33), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(31), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2191] = 2,
-    ACTIONS(29), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(27), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2214] = 2,
-    ACTIONS(73), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(71), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2237] = 2,
-    ACTIONS(45), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(43), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2260] = 3,
-    ACTIONS(226), 1,
-      anon_sym_LPAREN,
-    ACTIONS(79), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(75), 12,
-      ts_builtin_sym_end,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2285] = 11,
-    ACTIONS(15), 1,
-      anon_sym_BANG,
-    ACTIONS(228), 1,
-      anon_sym_LPAREN,
-    ACTIONS(230), 1,
-      anon_sym_LBRACE,
-    ACTIONS(232), 1,
-      anon_sym_LBRACK,
-    ACTIONS(234), 1,
-      sym__single_quote,
-    ACTIONS(236), 1,
-      sym__double_quote,
-    ACTIONS(238), 1,
-      sym_number,
-    ACTIONS(240), 1,
-      sym_identifier,
-    STATE(93), 1,
-      sym_unary_operator,
-    STATE(189), 2,
-      sym_expression,
-      sym_unary_expression,
-    STATE(145), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2326] = 2,
-    ACTIONS(37), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(35), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2349] = 3,
-    ACTIONS(224), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(244), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(242), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2374] = 2,
-    ACTIONS(65), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(63), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2397] = 2,
-    ACTIONS(25), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(23), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2420] = 5,
-    ACTIONS(248), 1,
-      anon_sym_COLON,
-    STATE(103), 1,
-      sym_pipe_arguments,
-    STATE(72), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(250), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(246), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [2449] = 2,
-    ACTIONS(69), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(67), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2472] = 2,
-    ACTIONS(61), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(59), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2495] = 2,
-    ACTIONS(41), 5,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(39), 13,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_SEMI,
-  [2518] = 4,
-    ACTIONS(254), 1,
-      anon_sym_COLON,
-    STATE(71), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(257), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(252), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [2544] = 4,
-    ACTIONS(248), 1,
-      anon_sym_COLON,
-    STATE(71), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(261), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(259), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [2570] = 6,
-    ACTIONS(263), 1,
-      anon_sym_PIPE,
-    STATE(131), 1,
-      aux_sym_pipe_sequence_repeat1,
-    STATE(136), 1,
-      sym_pipe_sequence,
-    ACTIONS(265), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(57), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(47), 6,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-  [2599] = 3,
-    ACTIONS(265), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(244), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(242), 8,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-  [2621] = 9,
-    ACTIONS(267), 1,
-      anon_sym_LPAREN,
-    ACTIONS(269), 1,
-      anon_sym_LBRACE,
-    ACTIONS(271), 1,
-      anon_sym_LBRACK,
-    ACTIONS(273), 1,
-      sym__single_quote,
-    ACTIONS(275), 1,
-      sym__double_quote,
-    ACTIONS(277), 1,
-      sym_number,
-    ACTIONS(279), 1,
-      sym_identifier,
-    STATE(99), 1,
-      sym_expression,
-    STATE(56), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2655] = 2,
-    ACTIONS(41), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(39), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2675] = 4,
-    ACTIONS(222), 1,
-      anon_sym_PIPE,
-    STATE(89), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(283), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(281), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [2699] = 9,
-    ACTIONS(285), 1,
-      anon_sym_LPAREN,
-    ACTIONS(287), 1,
-      anon_sym_LBRACE,
-    ACTIONS(289), 1,
-      anon_sym_LBRACK,
-    ACTIONS(291), 1,
-      sym__single_quote,
-    ACTIONS(293), 1,
-      sym__double_quote,
-    ACTIONS(295), 1,
-      sym_number,
-    ACTIONS(297), 1,
-      sym_identifier,
-    STATE(138), 1,
-      sym_expression,
-    STATE(73), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2733] = 9,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(299), 1,
-      sym_number,
-    ACTIONS(301), 1,
-      sym_identifier,
-    STATE(138), 1,
-      sym_expression,
-    STATE(163), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [2767] = 2,
-    ACTIONS(29), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(27), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2787] = 2,
-    ACTIONS(69), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(67), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2807] = 2,
-    ACTIONS(25), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(23), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2827] = 2,
-    ACTIONS(65), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(63), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2847] = 2,
-    ACTIONS(37), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(35), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2867] = 2,
-    ACTIONS(61), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(59), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2887] = 2,
-    ACTIONS(73), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(71), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2907] = 2,
-    ACTIONS(45), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(43), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2927] = 3,
-    ACTIONS(303), 1,
-      anon_sym_LPAREN,
-    ACTIONS(79), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(75), 10,
-      ts_builtin_sym_end,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2949] = 4,
-    ACTIONS(307), 1,
-      anon_sym_PIPE,
-    STATE(89), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(310), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(305), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [2973] = 2,
-    ACTIONS(33), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(31), 11,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [2993] = 9,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(156), 1,
-      sym_number,
-    ACTIONS(158), 1,
-      sym_identifier,
-    STATE(147), 1,
-      sym_expression,
-    STATE(95), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3027] = 5,
-    ACTIONS(312), 1,
-      anon_sym_COLON,
-    STATE(123), 1,
-      sym_pipe_arguments,
-    STATE(108), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(250), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(246), 8,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3053] = 9,
-    ACTIONS(228), 1,
-      anon_sym_LPAREN,
-    ACTIONS(230), 1,
-      anon_sym_LBRACE,
-    ACTIONS(232), 1,
-      anon_sym_LBRACK,
-    ACTIONS(234), 1,
-      sym__single_quote,
-    ACTIONS(236), 1,
-      sym__double_quote,
-    ACTIONS(238), 1,
-      sym_number,
-    ACTIONS(240), 1,
-      sym_identifier,
-    STATE(190), 1,
-      sym_expression,
-    STATE(145), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3087] = 6,
-    ACTIONS(316), 1,
-      anon_sym_COLON,
-    ACTIONS(320), 1,
-      sym_identifier,
-    ACTIONS(322), 1,
-      anon_sym_as,
-    STATE(133), 1,
-      sym__alias,
-    ACTIONS(318), 2,
-      sym_number,
-      anon_sym_let,
-    ACTIONS(314), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3115] = 6,
-    ACTIONS(324), 1,
-      anon_sym_PIPE,
-    STATE(140), 1,
-      aux_sym_pipe_sequence_repeat1,
-    STATE(160), 1,
-      sym_pipe_sequence,
-    ACTIONS(57), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(326), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(47), 6,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      sym__single_quote,
-      sym__double_quote,
-  [3143] = 8,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(301), 1,
-      sym_identifier,
-    ACTIONS(328), 1,
-      sym_number,
-    STATE(188), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3174] = 2,
-    ACTIONS(41), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(39), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3193] = 5,
-    ACTIONS(330), 1,
-      anon_sym_COLON,
-    STATE(146), 1,
-      sym_pipe_arguments,
-    ACTIONS(250), 2,
-      sym_number,
-      sym_identifier,
-    STATE(124), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(246), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3218] = 4,
-    ACTIONS(322), 1,
-      anon_sym_as,
-    STATE(132), 1,
-      sym__alias,
-    ACTIONS(334), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(332), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3241] = 8,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(301), 1,
-      sym_identifier,
-    ACTIONS(336), 1,
-      sym_number,
-    STATE(185), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3272] = 8,
-    ACTIONS(5), 1,
-      anon_sym_LPAREN,
-    ACTIONS(7), 1,
-      anon_sym_LBRACE,
-    ACTIONS(9), 1,
-      anon_sym_LBRACK,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(301), 1,
-      sym_identifier,
-    ACTIONS(338), 1,
-      sym_number,
-    STATE(166), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3303] = 4,
-    ACTIONS(340), 1,
-      anon_sym_COLON,
-    STATE(102), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(257), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(252), 8,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3326] = 2,
-    ACTIONS(345), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(343), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3345] = 3,
-    ACTIONS(244), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(326), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(242), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-  [3366] = 8,
-    ACTIONS(144), 1,
-      anon_sym_LPAREN,
-    ACTIONS(146), 1,
-      anon_sym_LBRACE,
-    ACTIONS(148), 1,
-      anon_sym_LBRACK,
-    ACTIONS(152), 1,
-      sym__single_quote,
-    ACTIONS(154), 1,
-      sym__double_quote,
-    ACTIONS(158), 1,
-      sym_identifier,
-    ACTIONS(347), 1,
-      sym_number,
-    STATE(104), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3397] = 2,
-    ACTIONS(45), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(43), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3416] = 2,
-    ACTIONS(73), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(71), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3435] = 4,
-    ACTIONS(312), 1,
-      anon_sym_COLON,
-    STATE(102), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(261), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(259), 8,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3458] = 2,
-    ACTIONS(29), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(27), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3477] = 8,
-    ACTIONS(285), 1,
-      anon_sym_LPAREN,
-    ACTIONS(287), 1,
-      anon_sym_LBRACE,
-    ACTIONS(289), 1,
-      anon_sym_LBRACK,
-    ACTIONS(291), 1,
-      sym__single_quote,
-    ACTIONS(293), 1,
-      sym__double_quote,
-    ACTIONS(297), 1,
-      sym_identifier,
-    ACTIONS(349), 1,
-      sym_number,
-    STATE(128), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3508] = 8,
-    ACTIONS(228), 1,
-      anon_sym_LPAREN,
-    ACTIONS(230), 1,
-      anon_sym_LBRACE,
-    ACTIONS(232), 1,
-      anon_sym_LBRACK,
-    ACTIONS(234), 1,
-      sym__single_quote,
-    ACTIONS(236), 1,
-      sym__double_quote,
-    ACTIONS(240), 1,
-      sym_identifier,
-    ACTIONS(351), 1,
-      sym_number,
-    STATE(158), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3539] = 8,
-    ACTIONS(285), 1,
-      anon_sym_LPAREN,
-    ACTIONS(287), 1,
-      anon_sym_LBRACE,
-    ACTIONS(289), 1,
-      anon_sym_LBRACK,
-    ACTIONS(291), 1,
-      sym__single_quote,
-    ACTIONS(293), 1,
-      sym__double_quote,
-    ACTIONS(297), 1,
-      sym_identifier,
-    ACTIONS(353), 1,
-      sym_number,
-    STATE(74), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3570] = 3,
-    ACTIONS(355), 1,
-      anon_sym_LPAREN,
-    ACTIONS(79), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(75), 10,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3591] = 2,
-    ACTIONS(61), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(59), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3610] = 2,
-    ACTIONS(69), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(67), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3629] = 2,
-    ACTIONS(25), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(23), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3648] = 2,
-    ACTIONS(65), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(63), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3667] = 2,
-    ACTIONS(310), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(305), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3686] = 8,
-    ACTIONS(267), 1,
-      anon_sym_LPAREN,
-    ACTIONS(269), 1,
-      anon_sym_LBRACE,
-    ACTIONS(271), 1,
-      anon_sym_LBRACK,
-    ACTIONS(273), 1,
-      sym__single_quote,
-    ACTIONS(275), 1,
-      sym__double_quote,
-    ACTIONS(279), 1,
-      sym_identifier,
-    ACTIONS(357), 1,
-      sym_number,
-    STATE(64), 7,
-      sym_group,
-      sym__primitive,
-      sym_object,
-      sym_array,
-      sym_member_expression,
-      sym_string,
-      sym_call_expression,
-  [3717] = 2,
-    ACTIONS(37), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(35), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3736] = 2,
-    ACTIONS(33), 3,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-    ACTIONS(31), 11,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-  [3755] = 4,
-    STATE(127), 1,
-      aux_sym_structural_declaration_repeat1,
-    ACTIONS(361), 2,
-      anon_sym_COMMA,
-      anon_sym_SEMI,
-    ACTIONS(363), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(359), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3777] = 2,
-    ACTIONS(345), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(343), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3795] = 4,
-    ACTIONS(330), 1,
-      anon_sym_COLON,
-    ACTIONS(261), 2,
-      sym_number,
-      sym_identifier,
-    STATE(126), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(259), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3817] = 4,
-    STATE(125), 1,
-      aux_sym_structural_declaration_repeat1,
-    ACTIONS(367), 2,
-      anon_sym_COMMA,
-      anon_sym_SEMI,
-    ACTIONS(370), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(365), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3839] = 4,
-    ACTIONS(372), 1,
-      anon_sym_COLON,
-    ACTIONS(257), 2,
-      sym_number,
-      sym_identifier,
-    STATE(126), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(252), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3861] = 4,
-    STATE(125), 1,
-      aux_sym_structural_declaration_repeat1,
-    ACTIONS(361), 2,
-      anon_sym_COMMA,
-      anon_sym_SEMI,
-    ACTIONS(377), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(375), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3883] = 3,
-    ACTIONS(265), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(381), 4,
-      anon_sym_BANG,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(379), 6,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-  [3903] = 2,
-    ACTIONS(310), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(305), 10,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3921] = 2,
-    ACTIONS(385), 4,
-      sym_number,
-      sym_identifier,
-      anon_sym_as,
-      anon_sym_let,
-    ACTIONS(383), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3939] = 4,
-    ACTIONS(263), 1,
-      anon_sym_PIPE,
-    STATE(134), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(283), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(281), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [3960] = 2,
-    ACTIONS(389), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(387), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3977] = 2,
-    ACTIONS(393), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(391), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [3994] = 4,
-    ACTIONS(395), 1,
-      anon_sym_PIPE,
-    STATE(134), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(310), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(305), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4015] = 2,
-    ACTIONS(400), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(398), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [4032] = 2,
-    ACTIONS(385), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(383), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4049] = 2,
-    ACTIONS(370), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(365), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [4066] = 2,
-    ACTIONS(404), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(402), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_RPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4083] = 2,
-    ACTIONS(408), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(406), 9,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_COMMA,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-      anon_sym_SEMI,
-  [4100] = 4,
-    ACTIONS(324), 1,
-      anon_sym_PIPE,
-    STATE(141), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(283), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(281), 7,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4120] = 4,
-    ACTIONS(410), 1,
-      anon_sym_PIPE,
-    STATE(141), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(310), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(305), 7,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4140] = 2,
-    ACTIONS(413), 1,
-      anon_sym_LPAREN,
-    ACTIONS(75), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4155] = 2,
-    ACTIONS(310), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(305), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4170] = 2,
-    ACTIONS(417), 3,
-      sym_number,
-      sym_identifier,
-      anon_sym_let,
-    ACTIONS(415), 7,
-      ts_builtin_sym_end,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4185] = 5,
-    ACTIONS(419), 1,
-      anon_sym_PIPE,
-    STATE(183), 1,
-      aux_sym_pipe_sequence_repeat1,
-    STATE(191), 1,
-      sym_pipe_sequence,
-    ACTIONS(421), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(47), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4206] = 2,
-    ACTIONS(345), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(343), 8,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4221] = 2,
-    ACTIONS(404), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(402), 7,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4235] = 1,
-    ACTIONS(43), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4247] = 1,
-    ACTIONS(71), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4259] = 1,
-    ACTIONS(27), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4271] = 1,
-    ACTIONS(39), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4283] = 1,
-    ACTIONS(59), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4295] = 1,
-    ACTIONS(67), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4307] = 1,
-    ACTIONS(23), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4319] = 1,
-    ACTIONS(63), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4331] = 1,
-    ACTIONS(35), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4343] = 1,
-    ACTIONS(31), 9,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4355] = 2,
-    ACTIONS(421), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(242), 6,
-      anon_sym_RBRACE,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4369] = 4,
-    ACTIONS(423), 1,
-      anon_sym_COLON,
-    STATE(187), 1,
-      sym_pipe_arguments,
-    STATE(161), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(246), 5,
-      anon_sym_RBRACE,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4387] = 2,
-    ACTIONS(385), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(383), 7,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      anon_sym_RBRACK,
-      sym__single_quote,
-      sym__double_quote,
-      anon_sym_BANG,
-  [4401] = 3,
-    ACTIONS(423), 1,
-      anon_sym_COLON,
-    STATE(162), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(259), 5,
-      anon_sym_RBRACE,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4416] = 3,
-    ACTIONS(425), 1,
-      anon_sym_COLON,
-    STATE(162), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(252), 5,
-      anon_sym_RBRACE,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4431] = 5,
-    ACTIONS(428), 1,
-      anon_sym_PIPE,
-    STATE(136), 1,
-      sym_pipe_sequence,
-    STATE(192), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(47), 2,
-      anon_sym_RPAREN,
-      anon_sym_COMMA,
-    ACTIONS(51), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-  [4450] = 2,
-    ACTIONS(77), 1,
-      anon_sym_LPAREN,
-    ACTIONS(75), 7,
-      anon_sym_RPAREN,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-      anon_sym_COMMA,
-  [4463] = 2,
-    ACTIONS(432), 2,
-      sym_number,
-      sym_identifier,
-    ACTIONS(430), 5,
-      anon_sym_LPAREN,
-      anon_sym_LBRACE,
-      anon_sym_LBRACK,
-      sym__single_quote,
-      sym__double_quote,
-  [4475] = 2,
-    ACTIONS(51), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-    ACTIONS(242), 4,
-      anon_sym_RPAREN,
-      anon_sym_COLON,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-  [4487] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(434), 1,
-      anon_sym_RBRACE,
-    ACTIONS(436), 1,
-      sym_identifier,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4507] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(438), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(174), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4527] = 6,
-    ACTIONS(440), 1,
-      anon_sym_RBRACE,
-    ACTIONS(442), 1,
-      sym__single_quote,
-    ACTIONS(445), 1,
-      sym__double_quote,
-    ACTIONS(448), 1,
-      sym_identifier,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4547] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(451), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(176), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4567] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(453), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4587] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(455), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(171), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4607] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(457), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(177), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4627] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(459), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4647] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(461), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(167), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4667] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(463), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4687] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(465), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4707] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(467), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(169), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4727] = 6,
-    ACTIONS(11), 1,
-      sym__single_quote,
-    ACTIONS(13), 1,
-      sym__double_quote,
-    ACTIONS(436), 1,
-      sym_identifier,
-    ACTIONS(469), 1,
-      anon_sym_RBRACE,
-    STATE(230), 1,
-      sym_string,
-    STATE(178), 2,
-      sym_pair,
-      aux_sym_object_repeat1,
-  [4747] = 4,
-    ACTIONS(471), 1,
-      anon_sym_COLON,
-    STATE(123), 1,
-      sym_pipe_arguments,
-    STATE(184), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(246), 3,
-      anon_sym_RPAREN,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-  [4763] = 3,
-    ACTIONS(473), 1,
-      anon_sym_COLON,
-    STATE(181), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(252), 3,
-      anon_sym_RPAREN,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-  [4776] = 3,
-    ACTIONS(476), 1,
-      anon_sym_PIPE,
-    STATE(182), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(305), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4789] = 3,
-    ACTIONS(419), 1,
-      anon_sym_PIPE,
-    STATE(182), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(281), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4802] = 3,
-    ACTIONS(471), 1,
-      anon_sym_COLON,
-    STATE(181), 2,
-      sym__pipe_argument,
-      aux_sym_pipe_arguments_repeat1,
-    ACTIONS(259), 3,
-      anon_sym_RPAREN,
-      anon_sym_PIPE,
-      anon_sym_COMMA,
-  [4815] = 2,
-    ACTIONS(379), 2,
-      anon_sym_RPAREN,
-      anon_sym_COMMA,
-    ACTIONS(51), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-  [4825] = 1,
-    ACTIONS(305), 5,
-      anon_sym_RBRACE,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4833] = 1,
-    ACTIONS(343), 5,
-      anon_sym_RBRACE,
-      anon_sym_PIPE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4841] = 2,
-    ACTIONS(479), 2,
-      anon_sym_RPAREN,
-      anon_sym_COMMA,
-    ACTIONS(51), 3,
-      anon_sym_DOT,
-      anon_sym_QMARK_DOT,
-      anon_sym_BANG_DOT,
-  [4851] = 1,
-    ACTIONS(481), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4858] = 1,
-    ACTIONS(402), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4865] = 1,
-    ACTIONS(383), 4,
-      anon_sym_RBRACE,
-      sym__single_quote,
-      sym__double_quote,
-      sym_identifier,
-  [4872] = 3,
-    ACTIONS(428), 1,
-      anon_sym_PIPE,
-    STATE(193), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(281), 2,
-      anon_sym_RPAREN,
-      anon_sym_COMMA,
-  [4883] = 3,
-    ACTIONS(483), 1,
-      anon_sym_PIPE,
-    STATE(193), 1,
-      aux_sym_pipe_sequence_repeat1,
-    ACTIONS(305), 2,
-      anon_sym_RPAREN,
-      anon_sym_COMMA,
-  [4894] = 3,
-    ACTIONS(486), 1,
-      sym__single_quote,
-    ACTIONS(488), 1,
-      aux_sym_string_token2,
-    STATE(219), 1,
-      aux_sym_string_repeat2,
-  [4904] = 3,
-    ACTIONS(490), 1,
-      sym__single_quote,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [4914] = 3,
-    ACTIONS(494), 1,
-      sym__double_quote,
-    ACTIONS(496), 1,
-      aux_sym_string_token1,
-    STATE(199), 1,
-      aux_sym_string_repeat1,
-  [4924] = 3,
-    ACTIONS(494), 1,
-      sym__single_quote,
-    ACTIONS(498), 1,
-      aux_sym_string_token2,
-    STATE(198), 1,
-      aux_sym_string_repeat2,
-  [4934] = 3,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    ACTIONS(500), 1,
-      sym__single_quote,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [4944] = 3,
-    ACTIONS(500), 1,
-      sym__double_quote,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [4954] = 3,
-    ACTIONS(479), 1,
-      anon_sym_RPAREN,
-    ACTIONS(504), 1,
-      anon_sym_COMMA,
-    STATE(200), 1,
-      aux_sym_arguments_repeat1,
-  [4964] = 3,
-    ACTIONS(507), 1,
-      sym__single_quote,
-    ACTIONS(509), 1,
-      aux_sym_string_token2,
-    STATE(214), 1,
-      aux_sym_string_repeat2,
-  [4974] = 3,
-    ACTIONS(507), 1,
-      sym__double_quote,
-    ACTIONS(511), 1,
-      aux_sym_string_token1,
-    STATE(217), 1,
-      aux_sym_string_repeat1,
-  [4984] = 3,
-    ACTIONS(126), 1,
-      anon_sym_COMMA,
-    ACTIONS(513), 1,
-      anon_sym_RPAREN,
-    STATE(200), 1,
-      aux_sym_arguments_repeat1,
-  [4994] = 3,
-    ACTIONS(490), 1,
-      sym__double_quote,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5004] = 3,
-    ACTIONS(124), 1,
-      anon_sym_RPAREN,
-    ACTIONS(126), 1,
-      anon_sym_COMMA,
-    STATE(203), 1,
-      aux_sym_arguments_repeat1,
-  [5014] = 3,
-    ACTIONS(515), 1,
-      sym__double_quote,
-    ACTIONS(517), 1,
-      aux_sym_string_token1,
-    STATE(204), 1,
-      aux_sym_string_repeat1,
-  [5024] = 3,
-    ACTIONS(519), 1,
-      sym__single_quote,
-    ACTIONS(521), 1,
-      aux_sym_string_token2,
-    STATE(212), 1,
-      aux_sym_string_repeat2,
-  [5034] = 3,
-    ACTIONS(519), 1,
-      sym__double_quote,
-    ACTIONS(523), 1,
-      aux_sym_string_token1,
-    STATE(213), 1,
-      aux_sym_string_repeat1,
-  [5044] = 3,
-    ACTIONS(515), 1,
-      sym__single_quote,
-    ACTIONS(525), 1,
-      aux_sym_string_token2,
-    STATE(195), 1,
-      aux_sym_string_repeat2,
-  [5054] = 3,
-    ACTIONS(527), 1,
-      sym__single_quote,
-    ACTIONS(529), 1,
-      aux_sym_string_token2,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [5064] = 3,
-    ACTIONS(486), 1,
-      sym__double_quote,
-    ACTIONS(532), 1,
-      aux_sym_string_token1,
-    STATE(218), 1,
-      aux_sym_string_repeat1,
-  [5074] = 3,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    ACTIONS(534), 1,
-      sym__single_quote,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [5084] = 3,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    ACTIONS(534), 1,
-      sym__double_quote,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5094] = 3,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    ACTIONS(536), 1,
-      sym__single_quote,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [5104] = 3,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    ACTIONS(538), 1,
-      sym__double_quote,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5114] = 3,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    ACTIONS(538), 1,
-      sym__single_quote,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [5124] = 3,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    ACTIONS(536), 1,
-      sym__double_quote,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5134] = 3,
-    ACTIONS(502), 1,
-      aux_sym_string_token1,
-    ACTIONS(540), 1,
-      sym__double_quote,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5144] = 3,
-    ACTIONS(492), 1,
-      aux_sym_string_token2,
-    ACTIONS(540), 1,
-      sym__single_quote,
-    STATE(210), 1,
-      aux_sym_string_repeat2,
-  [5154] = 3,
-    ACTIONS(542), 1,
-      sym__double_quote,
-    ACTIONS(544), 1,
-      aux_sym_string_token1,
-    STATE(220), 1,
-      aux_sym_string_repeat1,
-  [5164] = 3,
-    ACTIONS(547), 1,
-      sym__single_quote,
-    ACTIONS(549), 1,
-      aux_sym_string_token2,
-    STATE(216), 1,
-      aux_sym_string_repeat2,
-  [5174] = 3,
-    ACTIONS(547), 1,
-      sym__double_quote,
-    ACTIONS(551), 1,
-      aux_sym_string_token1,
-    STATE(215), 1,
-      aux_sym_string_repeat1,
-  [5184] = 2,
-    ACTIONS(553), 1,
-      sym_identifier,
-    STATE(143), 1,
-      sym_pipe_call,
-  [5191] = 2,
-    ACTIONS(555), 1,
-      sym_identifier,
-    STATE(186), 1,
-      sym_pipe_call,
-  [5198] = 2,
-    ACTIONS(557), 1,
-      sym_identifier,
-    STATE(122), 1,
-      sym_structural_assignment,
-  [5205] = 2,
-    ACTIONS(557), 1,
-      sym_identifier,
-    STATE(137), 1,
-      sym_structural_assignment,
-  [5212] = 2,
-    ACTIONS(559), 1,
-      sym_identifier,
-    STATE(118), 1,
-      sym_pipe_call,
-  [5219] = 2,
-    ACTIONS(561), 1,
-      sym_identifier,
-    STATE(129), 1,
-      sym_pipe_call,
-  [5226] = 2,
-    ACTIONS(563), 1,
-      sym_identifier,
-    STATE(129), 1,
-      sym_pipe_call,
-  [5233] = 1,
-    ACTIONS(565), 1,
-      anon_sym_COLON,
-  [5237] = 1,
-    ACTIONS(567), 1,
-      sym_identifier,
-  [5241] = 1,
-    ACTIONS(569), 1,
-      anon_sym_RPAREN,
-  [5245] = 1,
-    ACTIONS(571), 1,
-      sym_identifier,
-  [5249] = 1,
-    ACTIONS(573), 1,
-      anon_sym_RPAREN,
-  [5253] = 1,
-    ACTIONS(575), 1,
-      anon_sym_RPAREN,
-  [5257] = 1,
-    ACTIONS(577), 1,
-      sym_identifier,
-  [5261] = 1,
-    ACTIONS(579), 1,
-      anon_sym_RPAREN,
-  [5265] = 1,
-    ACTIONS(581), 1,
-      anon_sym_RPAREN,
-  [5269] = 1,
-    ACTIONS(583), 1,
-      anon_sym_RPAREN,
-  [5273] = 1,
-    ACTIONS(585), 1,
-      anon_sym_RPAREN,
-  [5277] = 1,
-    ACTIONS(587), 1,
-      anon_sym_RPAREN,
-  [5281] = 1,
-    ACTIONS(589), 1,
-      anon_sym_RPAREN,
-  [5285] = 1,
-    ACTIONS(591), 1,
-      ts_builtin_sym_end,
-  [5289] = 1,
-    ACTIONS(593), 1,
-      sym_identifier,
-  [5293] = 1,
-    ACTIONS(595), 1,
-      anon_sym_RPAREN,
-  [5297] = 1,
-    ACTIONS(597), 1,
-      sym_identifier,
-  [5301] = 1,
-    ACTIONS(599), 1,
-      sym_identifier,
-  [5305] = 1,
-    ACTIONS(601), 1,
-      sym_identifier,
-  [5309] = 1,
-    ACTIONS(603), 1,
-      anon_sym_RPAREN,
-  [5313] = 1,
-    ACTIONS(605), 1,
-      sym_identifier,
-  [5317] = 1,
-    ACTIONS(607), 1,
-      anon_sym_RPAREN,
-};
 
-static uint32_t ts_small_parse_table_map[] = {
-  [SMALL_STATE(2)] = 0,
-  [SMALL_STATE(3)] = 37,
-  [SMALL_STATE(4)] = 74,
-  [SMALL_STATE(5)] = 111,
-  [SMALL_STATE(6)] = 148,
-  [SMALL_STATE(7)] = 185,
-  [SMALL_STATE(8)] = 222,
-  [SMALL_STATE(9)] = 273,
-  [SMALL_STATE(10)] = 310,
-  [SMALL_STATE(11)] = 347,
-  [SMALL_STATE(12)] = 384,
-  [SMALL_STATE(13)] = 421,
-  [SMALL_STATE(14)] = 460,
-  [SMALL_STATE(15)] = 496,
-  [SMALL_STATE(16)] = 549,
-  [SMALL_STATE(17)] = 602,
-  [SMALL_STATE(18)] = 642,
-  [SMALL_STATE(19)] = 671,
-  [SMALL_STATE(20)] = 708,
-  [SMALL_STATE(21)] = 734,
-  [SMALL_STATE(22)] = 760,
-  [SMALL_STATE(23)] = 786,
-  [SMALL_STATE(24)] = 812,
-  [SMALL_STATE(25)] = 838,
-  [SMALL_STATE(26)] = 864,
-  [SMALL_STATE(27)] = 890,
-  [SMALL_STATE(28)] = 916,
-  [SMALL_STATE(29)] = 942,
-  [SMALL_STATE(30)] = 968,
-  [SMALL_STATE(31)] = 1015,
-  [SMALL_STATE(32)] = 1060,
-  [SMALL_STATE(33)] = 1105,
-  [SMALL_STATE(34)] = 1148,
-  [SMALL_STATE(35)] = 1193,
-  [SMALL_STATE(36)] = 1238,
-  [SMALL_STATE(37)] = 1283,
-  [SMALL_STATE(38)] = 1326,
-  [SMALL_STATE(39)] = 1373,
-  [SMALL_STATE(40)] = 1420,
-  [SMALL_STATE(41)] = 1465,
-  [SMALL_STATE(42)] = 1510,
-  [SMALL_STATE(43)] = 1555,
-  [SMALL_STATE(44)] = 1602,
-  [SMALL_STATE(45)] = 1647,
-  [SMALL_STATE(46)] = 1694,
-  [SMALL_STATE(47)] = 1739,
-  [SMALL_STATE(48)] = 1784,
-  [SMALL_STATE(49)] = 1829,
-  [SMALL_STATE(50)] = 1876,
-  [SMALL_STATE(51)] = 1919,
-  [SMALL_STATE(52)] = 1962,
-  [SMALL_STATE(53)] = 2005,
-  [SMALL_STATE(54)] = 2048,
-  [SMALL_STATE(55)] = 2091,
-  [SMALL_STATE(56)] = 2136,
-  [SMALL_STATE(57)] = 2168,
-  [SMALL_STATE(58)] = 2191,
-  [SMALL_STATE(59)] = 2214,
-  [SMALL_STATE(60)] = 2237,
-  [SMALL_STATE(61)] = 2260,
-  [SMALL_STATE(62)] = 2285,
-  [SMALL_STATE(63)] = 2326,
-  [SMALL_STATE(64)] = 2349,
-  [SMALL_STATE(65)] = 2374,
-  [SMALL_STATE(66)] = 2397,
-  [SMALL_STATE(67)] = 2420,
-  [SMALL_STATE(68)] = 2449,
-  [SMALL_STATE(69)] = 2472,
-  [SMALL_STATE(70)] = 2495,
-  [SMALL_STATE(71)] = 2518,
-  [SMALL_STATE(72)] = 2544,
-  [SMALL_STATE(73)] = 2570,
-  [SMALL_STATE(74)] = 2599,
-  [SMALL_STATE(75)] = 2621,
-  [SMALL_STATE(76)] = 2655,
-  [SMALL_STATE(77)] = 2675,
-  [SMALL_STATE(78)] = 2699,
-  [SMALL_STATE(79)] = 2733,
-  [SMALL_STATE(80)] = 2767,
-  [SMALL_STATE(81)] = 2787,
-  [SMALL_STATE(82)] = 2807,
-  [SMALL_STATE(83)] = 2827,
-  [SMALL_STATE(84)] = 2847,
-  [SMALL_STATE(85)] = 2867,
-  [SMALL_STATE(86)] = 2887,
-  [SMALL_STATE(87)] = 2907,
-  [SMALL_STATE(88)] = 2927,
-  [SMALL_STATE(89)] = 2949,
-  [SMALL_STATE(90)] = 2973,
-  [SMALL_STATE(91)] = 2993,
-  [SMALL_STATE(92)] = 3027,
-  [SMALL_STATE(93)] = 3053,
-  [SMALL_STATE(94)] = 3087,
-  [SMALL_STATE(95)] = 3115,
-  [SMALL_STATE(96)] = 3143,
-  [SMALL_STATE(97)] = 3174,
-  [SMALL_STATE(98)] = 3193,
-  [SMALL_STATE(99)] = 3218,
-  [SMALL_STATE(100)] = 3241,
-  [SMALL_STATE(101)] = 3272,
-  [SMALL_STATE(102)] = 3303,
-  [SMALL_STATE(103)] = 3326,
-  [SMALL_STATE(104)] = 3345,
-  [SMALL_STATE(105)] = 3366,
-  [SMALL_STATE(106)] = 3397,
-  [SMALL_STATE(107)] = 3416,
-  [SMALL_STATE(108)] = 3435,
-  [SMALL_STATE(109)] = 3458,
-  [SMALL_STATE(110)] = 3477,
-  [SMALL_STATE(111)] = 3508,
-  [SMALL_STATE(112)] = 3539,
-  [SMALL_STATE(113)] = 3570,
-  [SMALL_STATE(114)] = 3591,
-  [SMALL_STATE(115)] = 3610,
-  [SMALL_STATE(116)] = 3629,
-  [SMALL_STATE(117)] = 3648,
-  [SMALL_STATE(118)] = 3667,
-  [SMALL_STATE(119)] = 3686,
-  [SMALL_STATE(120)] = 3717,
-  [SMALL_STATE(121)] = 3736,
-  [SMALL_STATE(122)] = 3755,
-  [SMALL_STATE(123)] = 3777,
-  [SMALL_STATE(124)] = 3795,
-  [SMALL_STATE(125)] = 3817,
-  [SMALL_STATE(126)] = 3839,
-  [SMALL_STATE(127)] = 3861,
-  [SMALL_STATE(128)] = 3883,
-  [SMALL_STATE(129)] = 3903,
-  [SMALL_STATE(130)] = 3921,
-  [SMALL_STATE(131)] = 3939,
-  [SMALL_STATE(132)] = 3960,
-  [SMALL_STATE(133)] = 3977,
-  [SMALL_STATE(134)] = 3994,
-  [SMALL_STATE(135)] = 4015,
-  [SMALL_STATE(136)] = 4032,
-  [SMALL_STATE(137)] = 4049,
-  [SMALL_STATE(138)] = 4066,
-  [SMALL_STATE(139)] = 4083,
-  [SMALL_STATE(140)] = 4100,
-  [SMALL_STATE(141)] = 4120,
-  [SMALL_STATE(142)] = 4140,
-  [SMALL_STATE(143)] = 4155,
-  [SMALL_STATE(144)] = 4170,
-  [SMALL_STATE(145)] = 4185,
-  [SMALL_STATE(146)] = 4206,
-  [SMALL_STATE(147)] = 4221,
-  [SMALL_STATE(148)] = 4235,
-  [SMALL_STATE(149)] = 4247,
-  [SMALL_STATE(150)] = 4259,
-  [SMALL_STATE(151)] = 4271,
-  [SMALL_STATE(152)] = 4283,
-  [SMALL_STATE(153)] = 4295,
-  [SMALL_STATE(154)] = 4307,
-  [SMALL_STATE(155)] = 4319,
-  [SMALL_STATE(156)] = 4331,
-  [SMALL_STATE(157)] = 4343,
-  [SMALL_STATE(158)] = 4355,
-  [SMALL_STATE(159)] = 4369,
-  [SMALL_STATE(160)] = 4387,
-  [SMALL_STATE(161)] = 4401,
-  [SMALL_STATE(162)] = 4416,
-  [SMALL_STATE(163)] = 4431,
-  [SMALL_STATE(164)] = 4450,
-  [SMALL_STATE(165)] = 4463,
-  [SMALL_STATE(166)] = 4475,
-  [SMALL_STATE(167)] = 4487,
-  [SMALL_STATE(168)] = 4507,
-  [SMALL_STATE(169)] = 4527,
-  [SMALL_STATE(170)] = 4547,
-  [SMALL_STATE(171)] = 4567,
-  [SMALL_STATE(172)] = 4587,
-  [SMALL_STATE(173)] = 4607,
-  [SMALL_STATE(174)] = 4627,
-  [SMALL_STATE(175)] = 4647,
-  [SMALL_STATE(176)] = 4667,
-  [SMALL_STATE(177)] = 4687,
-  [SMALL_STATE(178)] = 4707,
-  [SMALL_STATE(179)] = 4727,
-  [SMALL_STATE(180)] = 4747,
-  [SMALL_STATE(181)] = 4763,
-  [SMALL_STATE(182)] = 4776,
-  [SMALL_STATE(183)] = 4789,
-  [SMALL_STATE(184)] = 4802,
-  [SMALL_STATE(185)] = 4815,
-  [SMALL_STATE(186)] = 4825,
-  [SMALL_STATE(187)] = 4833,
-  [SMALL_STATE(188)] = 4841,
-  [SMALL_STATE(189)] = 4851,
-  [SMALL_STATE(190)] = 4858,
-  [SMALL_STATE(191)] = 4865,
-  [SMALL_STATE(192)] = 4872,
-  [SMALL_STATE(193)] = 4883,
-  [SMALL_STATE(194)] = 4894,
-  [SMALL_STATE(195)] = 4904,
-  [SMALL_STATE(196)] = 4914,
-  [SMALL_STATE(197)] = 4924,
-  [SMALL_STATE(198)] = 4934,
-  [SMALL_STATE(199)] = 4944,
-  [SMALL_STATE(200)] = 4954,
-  [SMALL_STATE(201)] = 4964,
-  [SMALL_STATE(202)] = 4974,
-  [SMALL_STATE(203)] = 4984,
-  [SMALL_STATE(204)] = 4994,
-  [SMALL_STATE(205)] = 5004,
-  [SMALL_STATE(206)] = 5014,
-  [SMALL_STATE(207)] = 5024,
-  [SMALL_STATE(208)] = 5034,
-  [SMALL_STATE(209)] = 5044,
-  [SMALL_STATE(210)] = 5054,
-  [SMALL_STATE(211)] = 5064,
-  [SMALL_STATE(212)] = 5074,
-  [SMALL_STATE(213)] = 5084,
-  [SMALL_STATE(214)] = 5094,
-  [SMALL_STATE(215)] = 5104,
-  [SMALL_STATE(216)] = 5114,
-  [SMALL_STATE(217)] = 5124,
-  [SMALL_STATE(218)] = 5134,
-  [SMALL_STATE(219)] = 5144,
-  [SMALL_STATE(220)] = 5154,
-  [SMALL_STATE(221)] = 5164,
-  [SMALL_STATE(222)] = 5174,
-  [SMALL_STATE(223)] = 5184,
-  [SMALL_STATE(224)] = 5191,
-  [SMALL_STATE(225)] = 5198,
-  [SMALL_STATE(226)] = 5205,
-  [SMALL_STATE(227)] = 5212,
-  [SMALL_STATE(228)] = 5219,
-  [SMALL_STATE(229)] = 5226,
-  [SMALL_STATE(230)] = 5233,
-  [SMALL_STATE(231)] = 5237,
-  [SMALL_STATE(232)] = 5241,
-  [SMALL_STATE(233)] = 5245,
-  [SMALL_STATE(234)] = 5249,
-  [SMALL_STATE(235)] = 5253,
-  [SMALL_STATE(236)] = 5257,
-  [SMALL_STATE(237)] = 5261,
-  [SMALL_STATE(238)] = 5265,
-  [SMALL_STATE(239)] = 5269,
-  [SMALL_STATE(240)] = 5273,
-  [SMALL_STATE(241)] = 5277,
-  [SMALL_STATE(242)] = 5281,
-  [SMALL_STATE(243)] = 5285,
-  [SMALL_STATE(244)] = 5289,
-  [SMALL_STATE(245)] = 5293,
-  [SMALL_STATE(246)] = 5297,
-  [SMALL_STATE(247)] = 5301,
-  [SMALL_STATE(248)] = 5305,
-  [SMALL_STATE(249)] = 5309,
-  [SMALL_STATE(250)] = 5313,
-  [SMALL_STATE(251)] = 5317,
-};
 
-static TSParseActionEntry ts_parse_actions[] = {
-  [0] = {.entry = {.count = 0, .reusable = false}},
-  [1] = {.entry = {.count = 1, .reusable = false}}, RECOVER(),
-  [3] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_program, 0),
-  [5] = {.entry = {.count = 1, .reusable = true}}, SHIFT(33),
-  [7] = {.entry = {.count = 1, .reusable = true}}, SHIFT(172),
-  [9] = {.entry = {.count = 1, .reusable = true}}, SHIFT(55),
-  [11] = {.entry = {.count = 1, .reusable = true}}, SHIFT(201),
-  [13] = {.entry = {.count = 1, .reusable = true}}, SHIFT(202),
-  [15] = {.entry = {.count = 1, .reusable = true}}, SHIFT(165),
-  [17] = {.entry = {.count = 1, .reusable = false}}, SHIFT(8),
-  [19] = {.entry = {.count = 1, .reusable = false}}, SHIFT(13),
-  [21] = {.entry = {.count = 1, .reusable = false}}, SHIFT(225),
-  [23] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_string, 3),
-  [25] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_string, 3),
-  [27] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_string, 2),
-  [29] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_string, 2),
-  [31] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_call_expression, 4, .production_id = 10),
-  [33] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_call_expression, 4, .production_id = 10),
-  [35] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_member_expression, 3, .production_id = 7),
-  [37] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_member_expression, 3, .production_id = 7),
-  [39] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_group, 3),
-  [41] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_group, 3),
-  [43] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_object, 2),
-  [45] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_object, 2),
-  [47] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expression, 1),
-  [49] = {.entry = {.count = 1, .reusable = false}}, SHIFT(228),
-  [51] = {.entry = {.count = 1, .reusable = true}}, SHIFT(233),
-  [53] = {.entry = {.count = 1, .reusable = true}}, SHIFT(110),
-  [55] = {.entry = {.count = 1, .reusable = false}}, SHIFT(110),
-  [57] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_expression, 1),
-  [59] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_object, 3),
-  [61] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_object, 3),
-  [63] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_call_expression, 3, .production_id = 4),
-  [65] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_call_expression, 3, .production_id = 4),
-  [67] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_array, 3),
-  [69] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_array, 3),
-  [71] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_array, 2),
-  [73] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_array, 2),
-  [75] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym__primitive, 1),
-  [77] = {.entry = {.count = 1, .reusable = true}}, SHIFT(38),
-  [79] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym__primitive, 1),
-  [81] = {.entry = {.count = 1, .reusable = false}}, SHIFT(37),
-  [83] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_program, 1),
-  [85] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2),
-  [87] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(33),
-  [90] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(172),
-  [93] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(55),
-  [96] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(201),
-  [99] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(202),
-  [102] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(165),
-  [105] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(8),
-  [108] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(13),
-  [111] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym_program_repeat1, 2), SHIFT_REPEAT(225),
-  [114] = {.entry = {.count = 1, .reusable = false}}, SHIFT(229),
-  [116] = {.entry = {.count = 1, .reusable = true}}, SHIFT(236),
-  [118] = {.entry = {.count = 1, .reusable = true}}, SHIFT(100),
-  [120] = {.entry = {.count = 1, .reusable = false}}, SHIFT(100),
-  [122] = {.entry = {.count = 1, .reusable = true}}, SHIFT(39),
-  [124] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_arguments, 1),
-  [126] = {.entry = {.count = 1, .reusable = true}}, SHIFT(96),
-  [128] = {.entry = {.count = 1, .reusable = true}}, SHIFT(51),
-  [130] = {.entry = {.count = 1, .reusable = true}}, SHIFT(83),
-  [132] = {.entry = {.count = 1, .reusable = true}}, SHIFT(170),
-  [134] = {.entry = {.count = 1, .reusable = true}}, SHIFT(47),
-  [136] = {.entry = {.count = 1, .reusable = true}}, SHIFT(194),
-  [138] = {.entry = {.count = 1, .reusable = true}}, SHIFT(211),
-  [140] = {.entry = {.count = 1, .reusable = false}}, SHIFT(19),
-  [142] = {.entry = {.count = 1, .reusable = false}}, SHIFT(18),
-  [144] = {.entry = {.count = 1, .reusable = true}}, SHIFT(52),
-  [146] = {.entry = {.count = 1, .reusable = true}}, SHIFT(175),
-  [148] = {.entry = {.count = 1, .reusable = true}}, SHIFT(34),
-  [150] = {.entry = {.count = 1, .reusable = true}}, SHIFT(25),
-  [152] = {.entry = {.count = 1, .reusable = true}}, SHIFT(197),
-  [154] = {.entry = {.count = 1, .reusable = true}}, SHIFT(196),
-  [156] = {.entry = {.count = 1, .reusable = false}}, SHIFT(95),
-  [158] = {.entry = {.count = 1, .reusable = false}}, SHIFT(113),
-  [160] = {.entry = {.count = 1, .reusable = true}}, SHIFT(115),
-  [162] = {.entry = {.count = 1, .reusable = false}}, SHIFT(17),
-  [164] = {.entry = {.count = 1, .reusable = true}}, SHIFT(107),
-  [166] = {.entry = {.count = 1, .reusable = true}}, SHIFT(86),
-  [168] = {.entry = {.count = 1, .reusable = true}}, SHIFT(81),
-  [170] = {.entry = {.count = 1, .reusable = false}}, SHIFT(14),
-  [172] = {.entry = {.count = 1, .reusable = true}}, SHIFT(10),
-  [174] = {.entry = {.count = 1, .reusable = true}}, SHIFT(26),
-  [176] = {.entry = {.count = 1, .reusable = true}}, SHIFT(149),
-  [178] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(52),
-  [181] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(175),
-  [184] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(34),
-  [187] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2),
-  [189] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(197),
-  [192] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(196),
-  [195] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(165),
-  [198] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(95),
-  [201] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym_array_repeat1, 2), SHIFT_REPEAT(113),
-  [204] = {.entry = {.count = 1, .reusable = true}}, SHIFT(153),
-  [206] = {.entry = {.count = 1, .reusable = true}}, SHIFT(117),
-  [208] = {.entry = {.count = 1, .reusable = true}}, SHIFT(11),
-  [210] = {.entry = {.count = 1, .reusable = true}}, SHIFT(155),
-  [212] = {.entry = {.count = 1, .reusable = true}}, SHIFT(59),
-  [214] = {.entry = {.count = 1, .reusable = true}}, SHIFT(28),
-  [216] = {.entry = {.count = 1, .reusable = true}}, SHIFT(68),
-  [218] = {.entry = {.count = 1, .reusable = true}}, SHIFT(65),
-  [220] = {.entry = {.count = 1, .reusable = true}}, SHIFT(12),
-  [222] = {.entry = {.count = 1, .reusable = true}}, SHIFT(227),
-  [224] = {.entry = {.count = 1, .reusable = true}}, SHIFT(231),
-  [226] = {.entry = {.count = 1, .reusable = true}}, SHIFT(49),
-  [228] = {.entry = {.count = 1, .reusable = true}}, SHIFT(54),
-  [230] = {.entry = {.count = 1, .reusable = true}}, SHIFT(168),
-  [232] = {.entry = {.count = 1, .reusable = true}}, SHIFT(40),
-  [234] = {.entry = {.count = 1, .reusable = true}}, SHIFT(221),
-  [236] = {.entry = {.count = 1, .reusable = true}}, SHIFT(222),
-  [238] = {.entry = {.count = 1, .reusable = false}}, SHIFT(145),
-  [240] = {.entry = {.count = 1, .reusable = false}}, SHIFT(142),
-  [242] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym__pipe_argument, 2),
-  [244] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym__pipe_argument, 2),
-  [246] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pipe_call, 1, .production_id = 1),
-  [248] = {.entry = {.count = 1, .reusable = true}}, SHIFT(119),
-  [250] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_pipe_call, 1, .production_id = 1),
-  [252] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2),
-  [254] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2), SHIFT_REPEAT(119),
-  [257] = {.entry = {.count = 1, .reusable = false}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2),
-  [259] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pipe_arguments, 1),
-  [261] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_pipe_arguments, 1),
-  [263] = {.entry = {.count = 1, .reusable = true}}, SHIFT(228),
-  [265] = {.entry = {.count = 1, .reusable = true}}, SHIFT(248),
-  [267] = {.entry = {.count = 1, .reusable = true}}, SHIFT(50),
-  [269] = {.entry = {.count = 1, .reusable = true}}, SHIFT(173),
-  [271] = {.entry = {.count = 1, .reusable = true}}, SHIFT(46),
-  [273] = {.entry = {.count = 1, .reusable = true}}, SHIFT(209),
-  [275] = {.entry = {.count = 1, .reusable = true}}, SHIFT(206),
-  [277] = {.entry = {.count = 1, .reusable = false}}, SHIFT(56),
-  [279] = {.entry = {.count = 1, .reusable = false}}, SHIFT(61),
-  [281] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pipe_sequence, 1),
-  [283] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_pipe_sequence, 1),
-  [285] = {.entry = {.count = 1, .reusable = true}}, SHIFT(53),
-  [287] = {.entry = {.count = 1, .reusable = true}}, SHIFT(179),
-  [289] = {.entry = {.count = 1, .reusable = true}}, SHIFT(35),
-  [291] = {.entry = {.count = 1, .reusable = true}}, SHIFT(207),
-  [293] = {.entry = {.count = 1, .reusable = true}}, SHIFT(208),
-  [295] = {.entry = {.count = 1, .reusable = false}}, SHIFT(73),
-  [297] = {.entry = {.count = 1, .reusable = false}}, SHIFT(88),
-  [299] = {.entry = {.count = 1, .reusable = false}}, SHIFT(163),
-  [301] = {.entry = {.count = 1, .reusable = false}}, SHIFT(164),
-  [303] = {.entry = {.count = 1, .reusable = true}}, SHIFT(30),
-  [305] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2),
-  [307] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2), SHIFT_REPEAT(227),
-  [310] = {.entry = {.count = 1, .reusable = false}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2),
-  [312] = {.entry = {.count = 1, .reusable = true}}, SHIFT(112),
-  [314] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_assignment, 1, .production_id = 1),
-  [316] = {.entry = {.count = 1, .reusable = true}}, SHIFT(244),
-  [318] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_assignment, 1, .production_id = 1),
-  [320] = {.entry = {.count = 1, .reusable = false}}, SHIFT(75),
-  [322] = {.entry = {.count = 1, .reusable = false}}, SHIFT(246),
-  [324] = {.entry = {.count = 1, .reusable = true}}, SHIFT(223),
-  [326] = {.entry = {.count = 1, .reusable = true}}, SHIFT(250),
-  [328] = {.entry = {.count = 1, .reusable = false}}, SHIFT(188),
-  [330] = {.entry = {.count = 1, .reusable = true}}, SHIFT(105),
-  [332] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_assignment, 3, .production_id = 11),
-  [334] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_assignment, 3, .production_id = 11),
-  [336] = {.entry = {.count = 1, .reusable = false}}, SHIFT(185),
-  [338] = {.entry = {.count = 1, .reusable = false}}, SHIFT(166),
-  [340] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2), SHIFT_REPEAT(112),
-  [343] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pipe_call, 2, .production_id = 13),
-  [345] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_pipe_call, 2, .production_id = 13),
-  [347] = {.entry = {.count = 1, .reusable = false}}, SHIFT(104),
-  [349] = {.entry = {.count = 1, .reusable = false}}, SHIFT(128),
-  [351] = {.entry = {.count = 1, .reusable = false}}, SHIFT(158),
-  [353] = {.entry = {.count = 1, .reusable = false}}, SHIFT(74),
-  [355] = {.entry = {.count = 1, .reusable = true}}, SHIFT(43),
-  [357] = {.entry = {.count = 1, .reusable = false}}, SHIFT(64),
-  [359] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_declaration, 2),
-  [361] = {.entry = {.count = 1, .reusable = true}}, SHIFT(226),
-  [363] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_declaration, 2),
-  [365] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_structural_declaration_repeat1, 2),
-  [367] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_structural_declaration_repeat1, 2), SHIFT_REPEAT(226),
-  [370] = {.entry = {.count = 1, .reusable = false}}, REDUCE(aux_sym_structural_declaration_repeat1, 2),
-  [372] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2), SHIFT_REPEAT(105),
-  [375] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_declaration, 3),
-  [377] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_declaration, 3),
-  [379] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_binary_expression, 3, .production_id = 8),
-  [381] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_binary_expression, 3, .production_id = 8),
-  [383] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_expression, 2, .production_id = 2),
-  [385] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_expression, 2, .production_id = 2),
-  [387] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_assignment, 4, .production_id = 14),
-  [389] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_assignment, 4, .production_id = 14),
-  [391] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_assignment, 2, .production_id = 6),
-  [393] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_assignment, 2, .production_id = 6),
-  [395] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2), SHIFT_REPEAT(228),
-  [398] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_structural_assignment, 3, .production_id = 5),
-  [400] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_structural_assignment, 3, .production_id = 5),
-  [402] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_unary_expression, 2, .production_id = 3),
-  [404] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_unary_expression, 2, .production_id = 3),
-  [406] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym__alias, 2, .production_id = 12),
-  [408] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym__alias, 2, .production_id = 12),
-  [410] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2), SHIFT_REPEAT(223),
-  [413] = {.entry = {.count = 1, .reusable = true}}, SHIFT(45),
-  [415] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_assignment_expression, 3, .production_id = 5),
-  [417] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_assignment_expression, 3, .production_id = 5),
-  [419] = {.entry = {.count = 1, .reusable = true}}, SHIFT(224),
-  [421] = {.entry = {.count = 1, .reusable = true}}, SHIFT(247),
-  [423] = {.entry = {.count = 1, .reusable = true}}, SHIFT(111),
-  [425] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2), SHIFT_REPEAT(111),
-  [428] = {.entry = {.count = 1, .reusable = true}}, SHIFT(229),
-  [430] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_unary_operator, 1),
-  [432] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_unary_operator, 1),
-  [434] = {.entry = {.count = 1, .reusable = true}}, SHIFT(114),
-  [436] = {.entry = {.count = 1, .reusable = true}}, SHIFT(230),
-  [438] = {.entry = {.count = 1, .reusable = true}}, SHIFT(148),
-  [440] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_object_repeat1, 2),
-  [442] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_object_repeat1, 2), SHIFT_REPEAT(201),
-  [445] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_object_repeat1, 2), SHIFT_REPEAT(202),
-  [448] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_object_repeat1, 2), SHIFT_REPEAT(230),
-  [451] = {.entry = {.count = 1, .reusable = true}}, SHIFT(29),
-  [453] = {.entry = {.count = 1, .reusable = true}}, SHIFT(9),
-  [455] = {.entry = {.count = 1, .reusable = true}}, SHIFT(7),
-  [457] = {.entry = {.count = 1, .reusable = true}}, SHIFT(60),
-  [459] = {.entry = {.count = 1, .reusable = true}}, SHIFT(152),
-  [461] = {.entry = {.count = 1, .reusable = true}}, SHIFT(106),
-  [463] = {.entry = {.count = 1, .reusable = true}}, SHIFT(24),
-  [465] = {.entry = {.count = 1, .reusable = true}}, SHIFT(69),
-  [467] = {.entry = {.count = 1, .reusable = true}}, SHIFT(85),
-  [469] = {.entry = {.count = 1, .reusable = true}}, SHIFT(87),
-  [471] = {.entry = {.count = 1, .reusable = true}}, SHIFT(101),
-  [473] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_arguments_repeat1, 2), SHIFT_REPEAT(101),
-  [476] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2), SHIFT_REPEAT(224),
-  [479] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_arguments_repeat1, 2),
-  [481] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_pair, 3, .production_id = 9),
-  [483] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_pipe_sequence_repeat1, 2), SHIFT_REPEAT(229),
-  [486] = {.entry = {.count = 1, .reusable = false}}, SHIFT(27),
-  [488] = {.entry = {.count = 1, .reusable = true}}, SHIFT(219),
-  [490] = {.entry = {.count = 1, .reusable = false}}, SHIFT(66),
-  [492] = {.entry = {.count = 1, .reusable = true}}, SHIFT(210),
-  [494] = {.entry = {.count = 1, .reusable = false}}, SHIFT(109),
-  [496] = {.entry = {.count = 1, .reusable = true}}, SHIFT(199),
-  [498] = {.entry = {.count = 1, .reusable = true}}, SHIFT(198),
-  [500] = {.entry = {.count = 1, .reusable = false}}, SHIFT(116),
-  [502] = {.entry = {.count = 1, .reusable = true}}, SHIFT(220),
-  [504] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_arguments_repeat1, 2), SHIFT_REPEAT(96),
-  [507] = {.entry = {.count = 1, .reusable = false}}, SHIFT(3),
-  [509] = {.entry = {.count = 1, .reusable = true}}, SHIFT(214),
-  [511] = {.entry = {.count = 1, .reusable = true}}, SHIFT(217),
-  [513] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_arguments, 2),
-  [515] = {.entry = {.count = 1, .reusable = false}}, SHIFT(58),
-  [517] = {.entry = {.count = 1, .reusable = true}}, SHIFT(204),
-  [519] = {.entry = {.count = 1, .reusable = false}}, SHIFT(80),
-  [521] = {.entry = {.count = 1, .reusable = true}}, SHIFT(212),
-  [523] = {.entry = {.count = 1, .reusable = true}}, SHIFT(213),
-  [525] = {.entry = {.count = 1, .reusable = true}}, SHIFT(195),
-  [527] = {.entry = {.count = 1, .reusable = false}}, REDUCE(aux_sym_string_repeat2, 2),
-  [529] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_string_repeat2, 2), SHIFT_REPEAT(210),
-  [532] = {.entry = {.count = 1, .reusable = true}}, SHIFT(218),
-  [534] = {.entry = {.count = 1, .reusable = false}}, SHIFT(82),
-  [536] = {.entry = {.count = 1, .reusable = false}}, SHIFT(2),
-  [538] = {.entry = {.count = 1, .reusable = false}}, SHIFT(154),
-  [540] = {.entry = {.count = 1, .reusable = false}}, SHIFT(21),
-  [542] = {.entry = {.count = 1, .reusable = false}}, REDUCE(aux_sym_string_repeat1, 2),
-  [544] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_string_repeat1, 2), SHIFT_REPEAT(220),
-  [547] = {.entry = {.count = 1, .reusable = false}}, SHIFT(150),
-  [549] = {.entry = {.count = 1, .reusable = true}}, SHIFT(216),
-  [551] = {.entry = {.count = 1, .reusable = true}}, SHIFT(215),
-  [553] = {.entry = {.count = 1, .reusable = true}}, SHIFT(98),
-  [555] = {.entry = {.count = 1, .reusable = true}}, SHIFT(159),
-  [557] = {.entry = {.count = 1, .reusable = true}}, SHIFT(94),
-  [559] = {.entry = {.count = 1, .reusable = true}}, SHIFT(67),
-  [561] = {.entry = {.count = 1, .reusable = true}}, SHIFT(92),
-  [563] = {.entry = {.count = 1, .reusable = true}}, SHIFT(180),
-  [565] = {.entry = {.count = 1, .reusable = true}}, SHIFT(62),
-  [567] = {.entry = {.count = 1, .reusable = true}}, SHIFT(63),
-  [569] = {.entry = {.count = 1, .reusable = true}}, SHIFT(4),
-  [571] = {.entry = {.count = 1, .reusable = true}}, SHIFT(5),
-  [573] = {.entry = {.count = 1, .reusable = true}}, SHIFT(76),
-  [575] = {.entry = {.count = 1, .reusable = true}}, SHIFT(70),
-  [577] = {.entry = {.count = 1, .reusable = true}}, SHIFT(23),
-  [579] = {.entry = {.count = 1, .reusable = true}}, SHIFT(151),
-  [581] = {.entry = {.count = 1, .reusable = true}}, SHIFT(97),
-  [583] = {.entry = {.count = 1, .reusable = true}}, SHIFT(22),
-  [585] = {.entry = {.count = 1, .reusable = true}}, SHIFT(6),
-  [587] = {.entry = {.count = 1, .reusable = true}}, SHIFT(157),
-  [589] = {.entry = {.count = 1, .reusable = true}}, SHIFT(57),
-  [591] = {.entry = {.count = 1, .reusable = true}},  ACCEPT_INPUT(),
-  [593] = {.entry = {.count = 1, .reusable = true}}, SHIFT(135),
-  [595] = {.entry = {.count = 1, .reusable = true}}, SHIFT(20),
-  [597] = {.entry = {.count = 1, .reusable = true}}, SHIFT(139),
-  [599] = {.entry = {.count = 1, .reusable = true}}, SHIFT(156),
-  [601] = {.entry = {.count = 1, .reusable = true}}, SHIFT(84),
-  [603] = {.entry = {.count = 1, .reusable = true}}, SHIFT(121),
-  [605] = {.entry = {.count = 1, .reusable = true}}, SHIFT(120),
-  [607] = {.entry = {.count = 1, .reusable = true}}, SHIFT(90),
-};
+    
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#ifdef _WIN32
-#define extern __declspec(dllexport)
-#endif
+  <meta name="request-id" content="9CD4:711F:115CB:1E049:6311DF8C" data-pjax-transient="true"/><meta name="html-safe-nonce" content="92ca7bae70bd045e02f18e9717be84269ba682dad3c846c8949dbbe4ad48dde2" data-pjax-transient="true"/><meta name="visitor-payload" content="eyJyZWZlcnJlciI6IiIsInJlcXVlc3RfaWQiOiI5Q0Q0OjcxMUY6MTE1Q0I6MUUwNDk6NjMxMURGOEMiLCJ2aXNpdG9yX2lkIjoiNzA4NTMwMTEzNTU0Mjc2MjM2IiwicmVnaW9uX2VkZ2UiOiJpYWQiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true"/><meta name="visitor-hmac" content="d194edc4dd4ee497680f9062001082c29d7606d59ce4ddaad8f69d2fff2d974d" data-pjax-transient="true"/>
 
-extern const TSLanguage *tree_sitter_angular(void) {
-  static TSLanguage language = {
-    .version = LANGUAGE_VERSION,
-    .symbol_count = SYMBOL_COUNT,
-    .alias_count = ALIAS_COUNT,
-    .token_count = TOKEN_COUNT,
-    .large_state_count = LARGE_STATE_COUNT,
-    .symbol_metadata = ts_symbol_metadata,
-    .parse_table = (const unsigned short *)ts_parse_table,
-    .small_parse_table = (const uint16_t *)ts_small_parse_table,
-    .small_parse_table_map = (const uint32_t *)ts_small_parse_table_map,
-    .parse_actions = ts_parse_actions,
-    .lex_modes = ts_lex_modes,
-    .symbol_names = ts_symbol_names,
-    .public_symbol_map = ts_symbol_map,
-    .alias_sequences = (const TSSymbol *)ts_alias_sequences,
-    .field_count = FIELD_COUNT,
-    .field_names = ts_field_names,
-    .field_map_slices = (const TSFieldMapSlice *)ts_field_map_slices,
-    .field_map_entries = (const TSFieldMapEntry *)ts_field_map_entries,
-    .max_alias_sequence_length = MAX_ALIAS_SEQUENCE_LENGTH,
-    .lex_fn = ts_lex,
-    .external_token_count = EXTERNAL_TOKEN_COUNT,
-  };
-  return &language;
-}
-#ifdef __cplusplus
-}
-#endif
+    <meta name="hovercard-subject-tag" content="repository:81508260" data-pjax-transient>
+
+
+  <meta name="github-keyboard-shortcuts" content="repository,source-code,file-tree" data-pjax-transient="true" />
+  
+
+  <meta name="selected-link" value="repo_source" data-pjax-transient>
+
+    <meta name="google-site-verification" content="c1kuD-K2HIVF635lypcsWPoD4kilo5-jA_wBFyT4uMY">
+  <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+  <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
+  <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
+
+<meta name="octolytics-url" content="https://collector.github.com/github/collect" />
+
+  <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
+
+  
+
+
+
+
+  
+
+    <meta name="user-login" content="">
+
+  
+
+    <meta name="viewport" content="width=device-width">
+    
+      <meta name="description" content="TypeScript grammar for tree-sitter. Contribute to tree-sitter/tree-sitter-typescript development by creating an account on GitHub.">
+      <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <meta property="fb:app_id" content="1401488693436528">
+    <meta name="apple-itunes-app" content="app-id=1477376905" />
+      <meta name="twitter:image:src" content="https://opengraph.githubassets.com/8596e639a308be29c98bb075b80b5c7f2f16133f06c46430923fa1cb079a1485/tree-sitter/tree-sitter-typescript" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="tree-sitter-typescript/parser.c at master · tree-sitter/tree-sitter-typescript" /><meta name="twitter:description" content="TypeScript grammar for tree-sitter. Contribute to tree-sitter/tree-sitter-typescript development by creating an account on GitHub." />
+      <meta property="og:image" content="https://opengraph.githubassets.com/8596e639a308be29c98bb075b80b5c7f2f16133f06c46430923fa1cb079a1485/tree-sitter/tree-sitter-typescript" /><meta property="og:image:alt" content="TypeScript grammar for tree-sitter. Contribute to tree-sitter/tree-sitter-typescript development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="tree-sitter-typescript/parser.c at master · tree-sitter/tree-sitter-typescript" /><meta property="og:url" content="https://github.com/tree-sitter/tree-sitter-typescript" /><meta property="og:description" content="TypeScript grammar for tree-sitter. Contribute to tree-sitter/tree-sitter-typescript development by creating an account on GitHub." />
+      
+    <link rel="assets" href="https://github.githubassets.com/">
+
+
+        <meta name="hostname" content="github.com">
+
+
+
+        <meta name="expected-hostname" content="github.com">
+
+    <meta name="enabled-features" content="IMAGE_METRIC_TRACKING,GEOJSON_AZURE_MAPS">
+
+
+  <meta http-equiv="x-pjax-version" content="2911c647cb5a363a3497398315dce8d86f0549d661d082507fd103f0fb743dde" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-csp-version" content="d36423f9dec35f40d75bda7103dfcd1e46c44bd6aac49a971abe9919b3354f73" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-css-version" content="1523d01b9e6da65b9969d7434d636688f188a067703c56187f29bdae37fffdcd" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-js-version" content="010a906cbb067655141eef2bb9203961f5372b33e0a4a94cafd68067004843b9" data-turbo-track="reload">
+
+  <meta name="turbo-cache-control" content="no-preview" data-pjax-transient="">
+
+    
+  <meta name="go-import" content="github.com/tree-sitter/tree-sitter-typescript git https://github.com/tree-sitter/tree-sitter-typescript.git">
+
+  <meta name="octolytics-dimension-user_id" content="17203512" /><meta name="octolytics-dimension-user_login" content="tree-sitter" /><meta name="octolytics-dimension-repository_id" content="81508260" /><meta name="octolytics-dimension-repository_nwo" content="tree-sitter/tree-sitter-typescript" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="81508260" /><meta name="octolytics-dimension-repository_network_root_nwo" content="tree-sitter/tree-sitter-typescript" />
+
+
+
+    <link rel="canonical" href="https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c" data-pjax-transient>
+  <meta name="turbo-body-classes" content="logged-out env-production page-responsive page-blob tab-size-and-alignment-fix">
+
+
+  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+
+  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+
+  <meta name="browser-optimizely-client-errors-url" content="https://api.github.com/_private/browser/optimizely_client/errors">
+
+  <link rel="mask-icon" href="https://github.githubassets.com/pinned-octocat.svg" color="#000000">
+  <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+  <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
+
+<meta name="theme-color" content="#1e2327">
+<meta name="color-scheme" content="light dark" />
+
+
+  <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
+
+  </head>
+
+  <body class="logged-out env-production page-responsive page-blob tab-size-and-alignment-fix" style="word-wrap: break-word;">
+    
+
+    <div class="position-relative js-header-wrapper ">
+      <a href="#start-of-content" class="px-2 py-4 color-bg-accent-emphasis color-fg-on-emphasis show-on-focus js-skip-to-content">Skip to content</a>
+      <span data-view-component="true" class="progress-pjax-loader js-pjax-loader-bar Progress position-fixed width-full">
+    <span style="width: 0%;" data-view-component="true" class="Progress-item progress-pjax-loader-bar left-0 top-0 color-bg-accent-emphasis"></span>
+</span>      
+      
+
+
+        
+
+            <script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_remote-form_dist_index_js-node_modules_delegated-events_dist_inde-94fd67-417231a98525.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="https://github.githubassets.com/assets/sessions-319092af3d33.js"></script>
+<header class="Header-old header-logged-out js-details-container Details position-relative f4 py-2" role="banner">
+  <div class="container-xl d-lg-flex flex-items-center p-responsive">
+    <div class="d-flex flex-justify-between flex-items-center">
+      <a class="mr-4 color-fg-inherit" href="https://github.com/" aria-label="Homepage" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+        <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github">
+    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+</svg>
+      </a>
+
+        <div class="d-lg-none css-truncate css-truncate-target width-fit p-2">
+          
+
+        </div>
+
+      <div class="d-flex flex-items-center">
+            <a href="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo"
+              class="d-inline-block d-lg-none f5 no-underline border color-border-default rounded-2 px-2 py-1 mr-3 mr-sm-5 color-fg-inherit"
+              data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="c7973003faa44cbee5b64c3806a51c03876b4eb726ff89afb7a91df467cbaeb5"
+            >
+              Sign&nbsp;up
+            </a>
+
+          <button aria-label="Toggle navigation" aria-expanded="false" type="button" data-view-component="true" class="js-details-target btn-link d-lg-none mt-1 color-fg-inherit">    <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true" class="octicon octicon-three-bars">
+    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+</svg>
+</button>      </div>
+    </div>
+
+    <div class="HeaderMenu HeaderMenu--logged-out position-fixed top-0 right-0 bottom-0 height-fit position-lg-relative d-lg-flex flex-justify-between flex-items-center flex-auto">
+      <div class="d-flex d-lg-none flex-justify-end border-bottom color-bg-subtle p-3">
+          <button aria-label="Toggle navigation" aria-expanded="false" type="button" data-view-component="true" class="js-details-target btn-link">    <svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-x color-fg-muted">
+    <path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 011.06 0L12 10.94l5.22-5.22a.75.75 0 111.06 1.06L13.06 12l5.22 5.22a.75.75 0 11-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 01-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 010-1.06z"></path>
+</svg>
+</button>      </div>
+
+        <nav class="mt-0 px-3 px-lg-0 mb-5 mb-lg-0" aria-label="Global">
+          <ul class="d-lg-flex list-style-none">
+              <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <details class="HeaderMenu-details details-overlay details-reset width-full">
+      <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+        Product
+        <svg x="0" y="0" viewBox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative"><path d="M1,1l6.2,6L13,1"></path></svg>
+      </summary>
+      <div class="dropdown-menu flex-auto rounded px-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+        <ul class="list-style-none f5 pb-1">
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Features&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Features;&quot;}" href="/features">
+      Features
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Mobile&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Mobile;&quot;}" href="/mobile">
+      Mobile
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Actions&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Actions;&quot;}" href="/features/actions">
+      Actions
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Codespaces&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Codespaces;&quot;}" href="/features/codespaces">
+      Codespaces
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Copilot&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Copilot;&quot;}" href="/features/copilot">
+      Copilot
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Packages&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Packages;&quot;}" href="/features/packages">
+      Packages
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Security&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Security;&quot;}" href="/features/security">
+      Security
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Code review&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Code review;&quot;}" href="/features/code-review">
+      Code review
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Issues&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Issues;&quot;}" href="/features/issues">
+      Issues
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Discussions&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Discussions;&quot;}" href="/features/discussions">
+      Discussions
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Integrations&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Integrations;&quot;}" href="/features/integrations">
+      Integrations
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold border-top pt-4 pb-2 mt-3" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to GitHub Sponsors&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:GitHub Sponsors;&quot;}" href="/sponsors">
+      GitHub Sponsors
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Product&quot;,&quot;action&quot;:&quot;click to go to Customer stories&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Customer stories;&quot;}" href="/customer-stories">
+      Customer stories
+</a>  </li>
+
+        </ul>
+      </div>
+    </details>
+</li>
+
+
+              <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <a class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" data-analytics-event="{&quot;category&quot;:&quot;Header menu top item (logged out)&quot;,&quot;action&quot;:&quot;click to go to Team&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Team;&quot;}" href="/team">Team</a>
+</li>
+
+              <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <a class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" data-analytics-event="{&quot;category&quot;:&quot;Header menu top item (logged out)&quot;,&quot;action&quot;:&quot;click to go to Enterprise&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Enterprise;&quot;}" href="/enterprise">Enterprise</a>
+</li>
+
+
+            <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <details class="HeaderMenu-details details-overlay details-reset width-full">
+      <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+        Explore
+        <svg x="0" y="0" viewBox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative"><path d="M1,1l6.2,6L13,1"></path></svg>
+      </summary>
+      <div class="dropdown-menu flex-auto rounded px-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+        <ul class="list-style-none f5 pb-1">
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Explore GitHub&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Explore GitHub;&quot;}" href="/explore">
+      Explore GitHub
+</a>  </li>
+
+              <li class="color-fg-muted text-normal f6 text-mono mb-1 border-top pt-3 mt-3 mb-1">Learn and contribute</li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Topics&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Topics;&quot;}" href="/topics">
+      Topics
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Collections&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Collections;&quot;}" href="/collections">
+      Collections
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Trending&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Trending;&quot;}" href="/trending">
+      Trending
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Skills&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Skills;&quot;}" href="https://skills.github.com/">
+      Skills
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to GitHub Sponsors&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:GitHub Sponsors;&quot;}" href="/sponsors/explore">
+      GitHub Sponsors
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Open source guides&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Open source guides;&quot;}" href="https://opensource.guide">
+      Open source guides
+</a>  </li>
+
+              <li class="color-fg-muted text-normal f6 text-mono mb-1 border-top pt-3 mt-3 mb-1">Connect with others</li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to The ReadME Project&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:The ReadME Project;&quot;}" href="/readme">
+      The ReadME Project
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Events&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Events;&quot;}" href="/events">
+      Events
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to Community forum&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Community forum;&quot;}" href="https://github.community">
+      Community forum
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to GitHub Education&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:GitHub Education;&quot;}" href="https://education.github.com">
+      GitHub Education
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Explore&quot;,&quot;action&quot;:&quot;click to go to GitHub Stars program&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:GitHub Stars program;&quot;}" href="https://stars.github.com">
+      GitHub Stars program
+</a>  </li>
+
+        </ul>
+      </div>
+    </details>
+</li>
+
+
+            <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <a class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" data-analytics-event="{&quot;category&quot;:&quot;Header menu top item (logged out)&quot;,&quot;action&quot;:&quot;click to go to Marketplace&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Marketplace;&quot;}" href="/marketplace">Marketplace</a>
+</li>
+
+
+            <li class="mr-0 mr-lg-3 position-relative flex-wrap flex-justify-between flex-items-center border-bottom border-lg-bottom-0 d-block d-lg-flex flex-lg-nowrap flex-lg-items-center">
+    <details class="HeaderMenu-details details-overlay details-reset width-full">
+      <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+        Pricing
+        <svg x="0" y="0" viewBox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative"><path d="M1,1l6.2,6L13,1"></path></svg>
+      </summary>
+      <div class="dropdown-menu flex-auto rounded px-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+        <ul class="list-style-none f5 pb-1">
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Pricing&quot;,&quot;action&quot;:&quot;click to go to Plans&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Plans;&quot;}" href="/pricing">
+      Plans
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Pricing&quot;,&quot;action&quot;:&quot;click to go to Compare plans&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Compare plans;&quot;}" href="/pricing#compare-features">
+      Compare plans
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--secondary py-2" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Pricing&quot;,&quot;action&quot;:&quot;click to go to Contact Sales&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Contact Sales;&quot;}" href="https://github.com/enterprise/contact">
+      Contact Sales
+</a>  </li>
+
+              <li>
+    <a class="lh-condensed-ultra d-block no-underline position-relative Link--primary text-bold border-top pt-4 pb-2 mt-3" data-analytics-event="{&quot;category&quot;:&quot;Header dropdown (logged out), Pricing&quot;,&quot;action&quot;:&quot;click to go to Education&quot;,&quot;label&quot;:&quot;ref_page:/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c;ref_cta:Education;&quot;}" href="https://education.github.com">
+      Education
+</a>  </li>
+
+        </ul>
+      </div>
+    </details>
+</li>
+
+          </ul>
+        </nav>
+
+      <div class="d-lg-flex flex-items-center px-3 px-lg-0 text-center text-lg-left">
+          <div class="d-lg-flex min-width-0 mb-3 mb-lg-0">
+            
+
+
+
+<div class="header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"
+>
+  <div class="position-relative">
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="js-site-search-form" role="search" aria-label="Site" data-scope-type="Repository" data-scope-id="81508260" data-scoped-search-url="/tree-sitter/tree-sitter-typescript/search" data-owner-scoped-search-url="/orgs/tree-sitter/search" data-unscoped-search-url="/search" data-turbo="false" action="/tree-sitter/tree-sitter-typescript/search" accept-charset="UTF-8" method="get">
+      <label class="form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+        <input type="text"
+          class="form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+          data-hotkey=s,/
+          name="q"
+          data-test-selector="nav-search-input"
+          placeholder="Search"
+          data-unscoped-placeholder="Search GitHub"
+          data-scoped-placeholder="Search"
+          autocapitalize="off"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-autocomplete="list"
+          aria-controls="jump-to-results"
+          aria-label="Search"
+          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations"
+          spellcheck="false"
+          autocomplete="off"
+        >
+        <input type="hidden" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" value="G0QasGwxeGL+tj90IMOJNNywTRKJmXdebcloyrVOHnYF/EG6XAAK2BgnV3Hfv/49uAxm7GiPYU4vUc5/fVTSOw==" />
+        <input type="hidden" class="js-site-search-type-field" name="type" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" aria-hidden="true" class="mr-1 header-search-key-slash"><path fill="none" stroke="#979A9C" opacity=".4" d="M3.5.5h12c1.7 0 3 1.3 3 3v13c0 1.7-1.3 3-3 3h-12c-1.7 0-3-1.3-3-3v-13c0-1.7 1.3-3 3-3z"></path><path fill="#979A9C" d="M11.8 6L8 15.1h-.9L10.8 6h1z"></path></svg>
+
+
+          <div class="Box position-absolute overflow-hidden d-none jump-to-suggestions js-jump-to-suggestions-container">
+            
+<ul class="d-none js-jump-to-suggestions-template-container">
+  
+
+<li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-suggestion" role="option">
+  <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="suggestion">
+    <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none">
+      <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo js-jump-to-octicon-repo d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+</svg>
+      <svg title="Project" aria-label="Project" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-project js-jump-to-octicon-project d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"></path>
+</svg>
+      <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+</svg>
+    </div>
+
+    <img class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" alt="" aria-label="Team" src="" width="28" height="28">
+
+    <div class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+    </div>
+
+    <div class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none js-jump-to-badge-search">
+      <span class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository">
+        In this repository
+      </span>
+      <span class="js-jump-to-badge-search-text-global d-none" aria-label="in all of GitHub">
+        All GitHub
+      </span>
+      <span aria-hidden="true" class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+
+    <div aria-hidden="true" class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump">
+      Jump to
+      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+  </a>
+</li>
+
+</ul>
+
+<ul class="d-none js-jump-to-no-results-template-container">
+  <li class="d-flex flex-justify-center flex-items-center f5 d-none js-jump-to-suggestion p-2">
+    <span class="color-fg-muted">No suggested jump to results</span>
+  </li>
+</ul>
+
+<ul id="jump-to-results" role="listbox" class="p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container">
+  
+
+<li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search d-none" role="option">
+  <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="scoped_search">
+    <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none">
+      <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo js-jump-to-octicon-repo d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+</svg>
+      <svg title="Project" aria-label="Project" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-project js-jump-to-octicon-project d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"></path>
+</svg>
+      <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+</svg>
+    </div>
+
+    <img class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" alt="" aria-label="Team" src="" width="28" height="28">
+
+    <div class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+    </div>
+
+    <div class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none js-jump-to-badge-search">
+      <span class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository">
+        In this repository
+      </span>
+      <span class="js-jump-to-badge-search-text-global d-none" aria-label="in all of GitHub">
+        All GitHub
+      </span>
+      <span aria-hidden="true" class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+
+    <div aria-hidden="true" class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump">
+      Jump to
+      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+  </a>
+</li>
+
+  
+
+<li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-owner-scoped-search d-none" role="option">
+  <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="owner_scoped_search">
+    <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none">
+      <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo js-jump-to-octicon-repo d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+</svg>
+      <svg title="Project" aria-label="Project" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-project js-jump-to-octicon-project d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"></path>
+</svg>
+      <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+</svg>
+    </div>
+
+    <img class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" alt="" aria-label="Team" src="" width="28" height="28">
+
+    <div class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+    </div>
+
+    <div class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none js-jump-to-badge-search">
+      <span class="js-jump-to-badge-search-text-default d-none" aria-label="in this organization">
+        In this organization
+      </span>
+      <span class="js-jump-to-badge-search-text-global d-none" aria-label="in all of GitHub">
+        All GitHub
+      </span>
+      <span aria-hidden="true" class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+
+    <div aria-hidden="true" class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump">
+      Jump to
+      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+  </a>
+</li>
+
+  
+
+<li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-global-search d-none" role="option">
+  <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="global_search">
+    <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center d-none">
+      <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo js-jump-to-octicon-repo d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+</svg>
+      <svg title="Project" aria-label="Project" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-project js-jump-to-octicon-project d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"></path>
+</svg>
+      <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search d-none flex-shrink-0">
+    <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+</svg>
+    </div>
+
+    <img class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar d-none" alt="" aria-label="Team" src="" width="28" height="28">
+
+    <div class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+    </div>
+
+    <div class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none js-jump-to-badge-search">
+      <span class="js-jump-to-badge-search-text-default d-none" aria-label="in this repository">
+        In this repository
+      </span>
+      <span class="js-jump-to-badge-search-text-global d-none" aria-label="in all of GitHub">
+        All GitHub
+      </span>
+      <span aria-hidden="true" class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+
+    <div aria-hidden="true" class="border rounded-2 flex-shrink-0 color-bg-subtle px-1 color-fg-muted ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump">
+      Jump to
+      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+    </div>
+  </a>
+</li>
+
+
+</ul>
+
+          </div>
+      </label>
+</form>  </div>
+</div>
+
+          </div>
+
+        <div class="position-relative mr-3 mb-4 mb-lg-0 d-inline-block">
+          <a href="/login?return_to=https%3A%2F%2Fgithub.com%2Ftree-sitter%2Ftree-sitter-typescript%2Fblob%2Fmaster%2Ftypescript%2Fsrc%2Fparser.c"
+            class="HeaderMenu-link flex-shrink-0 no-underline"
+            data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header menu&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="edb50a8d3fb7ea62b6e5020dec287f00527b0c6809d211326c513cf4388cd187"
+            data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">
+            Sign in
+          </a>
+        </div>
+
+          <a href="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo&amp;source_repo=tree-sitter%2Ftree-sitter-typescript"
+            class="HeaderMenu-link flex-shrink-0 d-inline-block no-underline border color-border-default rounded px-2 py-1"
+            data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header menu&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="edb50a8d3fb7ea62b6e5020dec287f00527b0c6809d211326c513cf4388cd187"
+            data-analytics-event="{&quot;category&quot;:&quot;Sign up&quot;,&quot;action&quot;:&quot;click to sign up for account&quot;,&quot;label&quot;:&quot;ref_page:/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show;ref_cta:Sign up;ref_loc:header logged out&quot;}"
+          >
+            Sign up
+          </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+    </div>
+
+  <div id="start-of-content" class="show-on-focus"></div>
+
+
+
+
+
+
+
+    <div data-pjax-replace id="js-flash-container" data-turbo-replace>
+
+
+
+  <template class="js-flash-template">
+    
+<div class="flash flash-full   {{ className }}">
+  <div class="px-2" >
+    <button class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
+</svg>
+    </button>
+    
+      <div>{{ message }}</div>
+
+  </div>
+</div>
+  </template>
+</div>
+
+
+    
+  <include-fragment class="js-notification-shelf-include-fragment" data-base-src="https://github.com/notifications/beta/shelf"></include-fragment>
+
+
+
+
+
+
+  <div
+    class="application-main "
+    data-commit-hovercards-enabled
+    data-discussion-hovercards-enabled
+    data-issue-and-pr-hovercards-enabled
+  >
+        <div itemscope itemtype="http://schema.org/SoftwareSourceCode" class="">
+    <main id="js-repo-pjax-container" data-pjax-container >
+      
+  
+
+    
+    
+
+
+
+
+
+
+
+  <div id="repository-container-header" class="pt-3 hide-full-screen" style="background-color: var(--color-page-header-bg);" data-pjax-replace data-turbo-replace>
+
+      <div class="d-flex flex-wrap flex-justify-end mb-3  px-3 px-md-4 px-lg-5" style="gap: 1rem;">
+
+        <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class=" d-flex flex-wrap flex-items-center wb-break-word f3 text-normal">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo color-fg-muted mr-2">
+    <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+</svg>
+  
+  <span class="author flex-self-stretch" itemprop="author">
+    <a class="url fn" rel="author" data-hovercard-type="organization" data-hovercard-url="/orgs/tree-sitter/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/tree-sitter">tree-sitter</a>
+  </span>
+  <span class="mx-1 flex-self-stretch color-fg-muted">/</span>
+  <strong itemprop="name" class="mr-2 flex-self-stretch">
+    <a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/tree-sitter/tree-sitter-typescript">tree-sitter-typescript</a>
+  </strong>
+
+  <span></span><span class="Label Label--secondary v-align-middle mr-1">Public</span>
+</div>
+
+        </div>
+
+          <ul class="pagehead-actions flex-shrink-0 d-none d-md-inline" style="padding: 2px 0;">
+
+    
+
+  <li>
+        <a href="/login?return_to=%2Ftree-sitter%2Ftree-sitter-typescript" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;notification subscription menu watch&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="5ab567a99efac9cc2b222c39dbf196153f8e2bc47a1e55e61134fb03424e2708" aria-label="You must be signed in to change notification settings" data-view-component="true" class="tooltipped tooltipped-s btn-sm btn">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-bell mr-2">
+    <path d="M8 16a2 2 0 001.985-1.75c.017-.137-.097-.25-.235-.25h-3.5c-.138 0-.252.113-.235.25A2 2 0 008 16z"></path><path fill-rule="evenodd" d="M8 1.5A3.5 3.5 0 004.5 5v2.947c0 .346-.102.683-.294.97l-1.703 2.556a.018.018 0 00-.003.01l.001.006c0 .002.002.004.004.006a.017.017 0 00.006.004l.007.001h10.964l.007-.001a.016.016 0 00.006-.004.016.016 0 00.004-.006l.001-.007a.017.017 0 00-.003-.01l-1.703-2.554a1.75 1.75 0 01-.294-.97V5A3.5 3.5 0 008 1.5zM3 5a5 5 0 0110 0v2.947c0 .05.015.098.042.139l1.703 2.555A1.518 1.518 0 0113.482 13H2.518a1.518 1.518 0 01-1.263-2.36l1.703-2.554A.25.25 0 003 7.947V5z"></path>
+</svg>Notifications
+</a>
+  </li>
+
+  <li>
+      
+    <a href="/login?return_to=%2Ftree-sitter%2Ftree-sitter-typescript" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;repo details fork button&quot;,&quot;repository_id&quot;:81508260,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="a4479ecd3b251721fca2dab7c74052c2f40c67bd975c736b64ceca7613c5f5de" aria-label="You must be signed in to fork a repository" data-view-component="true" class="tooltipped tooltipped-s btn-sm btn">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked mr-2">
+    <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
+</svg>Fork
+    <span id="repo-network-counter" data-pjax-replace="true" data-turbo-replace="true" title="53" data-view-component="true" class="Counter">53</span>
+</a>
+  </li>
+
+  <li>
+        <div data-view-component="true" class="BtnGroup d-flex">
+        <a href="/login?return_to=%2Ftree-sitter%2Ftree-sitter-typescript" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;star button&quot;,&quot;repository_id&quot;:81508260,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="e898af8632381baa935f826e8d183f26bae2f50810609a45820b803714d8d6d0" aria-label="You must be signed in to star a repository" data-view-component="true" class="tooltipped tooltipped-s btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star v-align-text-bottom d-inline-block mr-2">
+    <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
+</svg><span data-view-component="true" class="d-inline">
+          Star
+</span>          <span id="repo-stars-counter-star" aria-label="153 users starred this repository" data-singular-suffix="user starred this repository" data-plural-suffix="users starred this repository" data-pjax-replace="true" data-turbo-replace="true" title="153" data-view-component="true" class="Counter js-social-count">153</span>
+</a>        <button disabled="disabled" aria-label="You must be signed in to add this repository to a list" type="button" data-view-component="true" class="btn-sm btn BtnGroup-item px-2">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-triangle-down">
+    <path d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"></path>
+</svg>
+</button></div>
+  </li>
+
+  
+
+</ul>
+
+      </div>
+
+        <div id="responsive-meta-container" data-pjax-replace data-turbo-replace>
+</div>
+
+
+          
+
+  
+<nav data-pjax="#js-repo-pjax-container" aria-label="Repository" data-view-component="true" class="js-repo-nav js-sidenav-container-pjax js-responsive-underlinenav overflow-hidden UnderlineNav px-3 px-md-4 px-lg-5">
+
+  <ul data-view-component="true" class="UnderlineNav-body list-style-none">
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="code-tab" href="/tree-sitter/tree-sitter-typescript" data-tab-item="i0code-tab" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /tree-sitter/tree-sitter-typescript" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g c" aria-current="page" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item selected">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"></path>
+</svg>
+        <span data-content="Code">Code</span>
+          <span id="code-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="issues-tab" href="/tree-sitter/tree-sitter-typescript/issues" data-tab-item="i1issues-tab" data-selected-links="repo_issues repo_labels repo_milestones /tree-sitter/tree-sitter-typescript/issues" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g i" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path>
+</svg>
+        <span data-content="Issues">Issues</span>
+          <span id="issues-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="8" data-view-component="true" class="Counter">8</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="pull-requests-tab" href="/tree-sitter/tree-sitter-typescript/pulls" data-tab-item="i2pull-requests-tab" data-selected-links="repo_pulls checks /tree-sitter/tree-sitter-typescript/pulls" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g p" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"></path>
+</svg>
+        <span data-content="Pull requests">Pull requests</span>
+          <span id="pull-requests-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="4" data-view-component="true" class="Counter">4</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="actions-tab" href="/tree-sitter/tree-sitter-typescript/actions" data-tab-item="i3actions-tab" data-selected-links="repo_actions /tree-sitter/tree-sitter-typescript/actions" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g a" data-analytics-event="{&quot;category&quot;:&quot;Actions&quot;,&quot;action&quot;:&quot;clicked&quot;,&quot;label&quot;:&quot;ref_cta:Actions;ref_loc:navigation_helper&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-play UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z"></path>
+</svg>
+        <span data-content="Actions">Actions</span>
+          <span id="actions-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="projects-tab" href="/tree-sitter/tree-sitter-typescript/projects" data-tab-item="i4projects-tab" data-selected-links="repo_projects new_repo_project repo_project /tree-sitter/tree-sitter-typescript/projects" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g b" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-table UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0114.25 16H1.75A1.75 1.75 0 010 14.25V1.75zM1.5 6.5v7.75c0 .138.112.25.25.25H5v-8H1.5zM5 5H1.5V1.75a.25.25 0 01.25-.25H5V5zm1.5 1.5v8h7.75a.25.25 0 00.25-.25V6.5h-8zm8-1.5h-8V1.5h7.75a.25.25 0 01.25.25V5z"></path>
+</svg>
+        <span data-content="Projects">Projects</span>
+          <span id="projects-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="0" hidden="hidden" data-view-component="true" class="Counter">0</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="security-tab" href="/tree-sitter/tree-sitter-typescript/security" data-tab-item="i5security-tab" data-selected-links="security overview alerts policy token_scanning code_scanning /tree-sitter/tree-sitter-typescript/security" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g s" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-shield UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M7.467.133a1.75 1.75 0 011.066 0l5.25 1.68A1.75 1.75 0 0115 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.7 1.7 0 01-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 011.217-1.667l5.25-1.68zm.61 1.429a.25.25 0 00-.153 0l-5.25 1.68a.25.25 0 00-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.2.2 0 00.154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.25.25 0 00-.174-.237l-5.25-1.68zM9 10.5a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.75a.75.75 0 10-1.5 0v3a.75.75 0 001.5 0v-3z"></path>
+</svg>
+        <span data-content="Security">Security</span>
+          <include-fragment src="/tree-sitter/tree-sitter-typescript/security/overall-count" accept="text/fragment+html"></include-fragment>
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="insights-tab" href="/tree-sitter/tree-sitter-typescript/pulse" data-tab-item="i6insights-tab" data-selected-links="repo_graphs repo_contributors dependency_graph dependabot_updates pulse people community /tree-sitter/tree-sitter-typescript/pulse" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-graph UnderlineNav-octicon d-none d-sm-inline">
+    <path fill-rule="evenodd" d="M1.5 1.75a.75.75 0 00-1.5 0v12.5c0 .414.336.75.75.75h14.5a.75.75 0 000-1.5H1.5V1.75zm14.28 2.53a.75.75 0 00-1.06-1.06L10 7.94 7.53 5.47a.75.75 0 00-1.06 0L3.22 8.72a.75.75 0 001.06 1.06L7 7.06l2.47 2.47a.75.75 0 001.06 0l5.25-5.25z"></path>
+</svg>
+        <span data-content="Insights">Insights</span>
+          <span id="insights-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+</ul>
+    <div style="visibility:hidden;" data-view-component="true" class="UnderlineNav-actions js-responsive-underlinenav-overflow position-absolute pr-3 pr-md-4 pr-lg-5 right-0">      <details data-view-component="true" class="details-overlay details-reset position-relative">
+  <summary role="button" data-view-component="true">          <div class="UnderlineNav-item mr-0 border-0">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal">
+    <path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+</svg>
+            <span class="sr-only">More</span>
+          </div>
+</summary>
+  <div data-view-component="true">          <details-menu role="menu" data-view-component="true" class="dropdown-menu dropdown-menu-sw">
+  
+            <ul>
+                <li data-menu-item="i0code-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item selected dropdown-item" aria-current="page" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /tree-sitter/tree-sitter-typescript" href="/tree-sitter/tree-sitter-typescript">
+                    Code
+</a>                </li>
+                <li data-menu-item="i1issues-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="repo_issues repo_labels repo_milestones /tree-sitter/tree-sitter-typescript/issues" href="/tree-sitter/tree-sitter-typescript/issues">
+                    Issues
+</a>                </li>
+                <li data-menu-item="i2pull-requests-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="repo_pulls checks /tree-sitter/tree-sitter-typescript/pulls" href="/tree-sitter/tree-sitter-typescript/pulls">
+                    Pull requests
+</a>                </li>
+                <li data-menu-item="i3actions-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="repo_actions /tree-sitter/tree-sitter-typescript/actions" href="/tree-sitter/tree-sitter-typescript/actions">
+                    Actions
+</a>                </li>
+                <li data-menu-item="i4projects-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="repo_projects new_repo_project repo_project /tree-sitter/tree-sitter-typescript/projects" href="/tree-sitter/tree-sitter-typescript/projects">
+                    Projects
+</a>                </li>
+                <li data-menu-item="i5security-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="security overview alerts policy token_scanning code_scanning /tree-sitter/tree-sitter-typescript/security" href="/tree-sitter/tree-sitter-typescript/security">
+                    Security
+</a>                </li>
+                <li data-menu-item="i6insights-tab" hidden>
+                  <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links="repo_graphs repo_contributors dependency_graph dependabot_updates pulse people community /tree-sitter/tree-sitter-typescript/pulse" href="/tree-sitter/tree-sitter-typescript/pulse">
+                    Insights
+</a>                </li>
+            </ul>
+
+</details-menu></div>
+</details></div>
+</nav>
+
+
+  </div>
+
+
+
+
+  <turbo-frame id="repo-content-turbo-frame" target="_top" data-turbo-action="advance" class="">
+      <div id="repo-content-pjax-container" class="repository-content " >
+    
+    
+
+
+    
+      
+  <div class="clearfix container-xl px-3 px-md-4 px-lg-5 mt-4">
+    
+    
+<div data-test-selector="blob-container">
+  
+
+  
+
+
+
+
+    
+<a class="d-none js-permalink-shortcut" data-hotkey="y" href="/tree-sitter/tree-sitter-typescript/blob/082da44a5263599186dadafd2c974c19f3a73d28/typescript/src/parser.c">Permalink</a>
+
+<div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
+  
+<div class="position-relative">
+  <details class="details-reset details-overlay mr-0 mb-0 " id="branch-select-menu">
+    <summary class="btn css-truncate"
+            data-hotkey="w"
+            title="Switch branches or tags">
+      <svg text="gray" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-branch">
+    <path fill-rule="evenodd" d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"></path>
+</svg>
+      <span class="css-truncate-target" data-menu-button>master</span>
+      <span class="dropdown-caret"></span>
+    </summary>
+
+    
+<div class="SelectMenu">
+  <div class="SelectMenu-modal">
+    <header class="SelectMenu-header">
+      <span class="SelectMenu-title">Switch branches/tags</span>
+      <button class="SelectMenu-closeButton" type="button" data-toggle-for="branch-select-menu"><svg aria-label="Close menu" aria-hidden="false" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
+</svg></button>
+    </header>
+
+    <input-demux data-action="tab-container-change:input-demux#storeInput tab-container-changed:input-demux#updateInput">
+      <tab-container class="d-flex flex-column js-branches-tags-tabs" style="min-height: 0;">
+        <div class="SelectMenu-filter">
+          <input data-target="input-demux.source"
+                 id="context-commitish-filter-field"
+                 class="SelectMenu-input form-control"
+                 aria-owns="ref-list-branches"
+                 data-controls-ref-menu-id="ref-list-branches"
+                 autofocus
+                 autocomplete="off"
+                 aria-label="Filter branches/tags"
+                 placeholder="Filter branches/tags"
+                 type="text"
+          >
+        </div>
+
+        <div class="SelectMenu-tabs" role="tablist" data-target="input-demux.control" >
+          <button class="SelectMenu-tab" type="button" role="tab" aria-selected="true">Branches</button>
+          <button class="SelectMenu-tab" type="button" role="tab">Tags</button>
+        </div>
+
+        <div role="tabpanel" id="ref-list-branches" data-filter-placeholder="Filter branches/tags" tabindex="" class="d-flex flex-column flex-auto overflow-auto">
+          <ref-selector
+            type="branch"
+            data-targets="input-demux.sinks"
+            data-action="
+              input-entered:ref-selector#inputEntered
+              tab-selected:ref-selector#tabSelected
+              focus-list:ref-selector#focusFirstListMember
+            "
+            query-endpoint="/tree-sitter/tree-sitter-typescript/refs"
+            
+            cache-key="v0:1657043029.998563"
+            current-committish="bWFzdGVy"
+            default-branch="bWFzdGVy"
+            name-with-owner="dHJlZS1zaXR0ZXIvdHJlZS1zaXR0ZXItdHlwZXNjcmlwdA=="
+            prefetch-on-mouseover
+          >
+
+            <template data-target="ref-selector.fetchFailedTemplate">
+              <div class="SelectMenu-message" data-index="{{ index }}">Could not load branches</div>
+            </template>
+
+              <template data-target="ref-selector.noMatchTemplate">
+    <div class="SelectMenu-message">Nothing to show</div>
+</template>
+
+
+            <div data-target="ref-selector.listContainer" role="menu" class="SelectMenu-list " data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+              <div class="SelectMenu-loading pt-3 pb-0 overflow-hidden" aria-label="Menu is loading">
+                <svg style="box-sizing: content-box; color: var(--color-icon-primary);" width="32" height="32" viewBox="0 0 16 16" fill="none" data-view-component="true" class="anim-rotate">
+  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke" />
+  <path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+</svg>
+              </div>
+            </div>
+
+              <template data-target="ref-selector.itemTemplate">
+  <a href="https://github.com/tree-sitter/tree-sitter-typescript/blob/{{ urlEncodedRefName }}/typescript/src/parser.c" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
+    <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+</svg>
+    <span class="flex-1 css-truncate css-truncate-overflow {{ isFilteringClass }}">{{ refName }}</span>
+    <span hidden="{{ isNotDefault }}" class="Label Label--secondary flex-self-start">default</span>
+  </a>
+</template>
+
+
+              <footer class="SelectMenu-footer"><a href="/tree-sitter/tree-sitter-typescript/branches">View all branches</a></footer>
+          </ref-selector>
+
+        </div>
+
+        <div role="tabpanel" id="tags-menu" data-filter-placeholder="Find a tag" tabindex="" hidden class="d-flex flex-column flex-auto overflow-auto">
+          <ref-selector
+            type="tag"
+            data-action="
+              input-entered:ref-selector#inputEntered
+              tab-selected:ref-selector#tabSelected
+              focus-list:ref-selector#focusFirstListMember
+            "
+            data-targets="input-demux.sinks"
+            query-endpoint="/tree-sitter/tree-sitter-typescript/refs"
+            cache-key="v0:1657043029.998563"
+            current-committish="bWFzdGVy"
+            default-branch="bWFzdGVy"
+            name-with-owner="dHJlZS1zaXR0ZXIvdHJlZS1zaXR0ZXItdHlwZXNjcmlwdA=="
+          >
+
+            <template data-target="ref-selector.fetchFailedTemplate">
+              <div class="SelectMenu-message" data-index="{{ index }}">Could not load tags</div>
+            </template>
+
+            <template data-target="ref-selector.noMatchTemplate">
+              <div class="SelectMenu-message" data-index="{{ index }}">Nothing to show</div>
+            </template>
+
+              <template data-target="ref-selector.itemTemplate">
+  <a href="https://github.com/tree-sitter/tree-sitter-typescript/blob/{{ urlEncodedRefName }}/typescript/src/parser.c" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
+    <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+</svg>
+    <span class="flex-1 css-truncate css-truncate-overflow {{ isFilteringClass }}">{{ refName }}</span>
+    <span hidden="{{ isNotDefault }}" class="Label Label--secondary flex-self-start">default</span>
+  </a>
+</template>
+
+
+            <div data-target="ref-selector.listContainer" role="menu" class="SelectMenu-list" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+              <div class="SelectMenu-loading pt-3 pb-0 overflow-hidden" aria-label="Menu is loading">
+                <svg style="box-sizing: content-box; color: var(--color-icon-primary);" width="32" height="32" viewBox="0 0 16 16" fill="none" data-view-component="true" class="anim-rotate">
+  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke" />
+  <path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+</svg>
+              </div>
+            </div>
+              <footer class="SelectMenu-footer"><a href="/tree-sitter/tree-sitter-typescript/tags">View all tags</a></footer>
+          </ref-selector>
+        </div>
+      </tab-container>
+    </input-demux>
+  </div>
+</div>
+
+  </details>
+
+</div>
+
+  <h2 id="blob-path" class="breadcrumb flex-auto flex-self-center min-width-0 text-normal mx-2 width-full width-md-auto flex-order-1 flex-md-order-none mt-3 mt-md-0">
+    <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/tree-sitter/tree-sitter-typescript"><span>tree-sitter-typescript</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/tree-sitter/tree-sitter-typescript/tree/master/typescript"><span>typescript</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/tree-sitter/tree-sitter-typescript/tree/master/typescript/src"><span>src</span></a></span><span class="separator">/</span><strong class="final-path">parser.c</strong>
+  </h2>
+    <a href="/tree-sitter/tree-sitter-typescript/find/master" data-pjax="" data-hotkey="t" data-view-component="true" class="btn mr-2 d-none d-md-block">    Go to file
+</a>
+  <details id="blob-more-options-details" data-view-component="true" class="details-overlay details-reset position-relative">
+    <summary role="button" data-view-component="true" class="btn">    <svg aria-label="More options" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal">
+    <path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+</svg>
+</summary>
+  <div data-view-component="true">      <ul class="dropdown-menu dropdown-menu-sw">
+        <li class="d-block d-md-none">
+          <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:81508260,&quot;originating_url&quot;:&quot;https://github.com/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="5bd43446d781431ee0cfefcffcc4225b1e5673b4086e7db4a198ff13c656050c" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/tree-sitter/tree-sitter-typescript/find/master">
+            <span class="flex-auto">Go to file</span>
+            <span class="text-small color-fg-muted" aria-hidden="true">T</span>
+</a>        </li>
+        <li data-toggle-for="blob-more-options-details">
+            <button data-toggle-for="jumpto-line-details-dialog" type="button" data-view-component="true" class="dropdown-item btn-link">    <span class="d-flex flex-items-baseline">
+              <span class="flex-auto">Go to line</span>
+              <span class="text-small color-fg-muted" aria-hidden="true">L</span>
+            </span>
+</button>        </li>
+        <li class="dropdown-divider" role="none"></li>
+        <li>
+          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy path" value="typescript/src/parser.c" data-view-component="true" class="dropdown-item cursor-pointer">
+    
+            Copy path
+
+</clipboard-copy>        </li>
+        <li>
+          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy permalink" value="https://github.com/tree-sitter/tree-sitter-typescript/blob/082da44a5263599186dadafd2c974c19f3a73d28/typescript/src/parser.c" data-view-component="true" class="dropdown-item cursor-pointer">
+    
+            <span class="d-flex flex-items-baseline">
+              <span class="flex-auto">Copy permalink</span>
+            </span>
+
+</clipboard-copy>        </li>
+      </ul>
+</div>
+</details></div>
+
+
+
+
+
+    <div id="spoof-warning" class="mt-0 pb-3" hidden aria-hidden>
+  <div data-view-component="true" class="flash flash-warn mt-0 clearfix">
+  
+  
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert float-left mt-1">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+
+      <div class="overflow-hidden">This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.</div>
+
+
+  
+</div></div>
+
+    <include-fragment src="/tree-sitter/tree-sitter-typescript/spoofed_commit_check/082da44a5263599186dadafd2c974c19f3a73d28" data-test-selector="spoofed-commit-check"></include-fragment>
+
+    <div class="Box d-flex flex-column flex-shrink-0 mb-3">
+  <include-fragment src="/tree-sitter/tree-sitter-typescript/contributors/master/typescript/src/parser.c" class="commit-loader">
+    <div class="Box-header d-flex flex-items-center">
+      <div class="Skeleton avatar avatar-user flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1" style="width:24px;height:24px;"></div>
+      <div class="Skeleton Skeleton--text col-5 ml-2">&nbsp;</div>
+    </div>
+
+    <div class="Box-body d-flex flex-items-center" >
+      <div class="Skeleton Skeleton--text col-1">&nbsp;</div>
+      <span class="color-fg-danger h6 loader-error">Cannot retrieve contributors at this time</span>
+    </div>
+</include-fragment></div>
+
+
+
+
+
+
+
+
+  
+    <div data-target="readme-toc.content" class="Box mt-3 position-relative">
+      
+  <div
+    class="Box-header js-blob-header py-2 pr-2 d-flex flex-shrink-0 flex-md-row flex-items-center"
+    
+  >
+
+
+  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1">
+
+    5.97 MB
+  </div>
+
+  <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between hide-sm hide-md">
+      
+
+    <div class="BtnGroup">
+        <a data-permalink-href="/tree-sitter/tree-sitter-typescript/raw/082da44a5263599186dadafd2c974c19f3a73d28/typescript/src/parser.c" href="/tree-sitter/tree-sitter-typescript/raw/master/typescript/src/parser.c" id="raw-url" data-view-component="true" class="js-permalink-replaceable-link btn-sm btn BtnGroup-item">    Download
+</a>    </div>
+
+    <div class="d-flex">
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" data-turbo="false" action="/tree-sitter/tree-sitter-typescript/delete/master/typescript/src/parser.c" accept-charset="UTF-8" method="post"><input type="hidden" data-csrf="true" name="authenticity_token" value="0G0P3Ipft2jndnHgWQUU+CwONeBbr9HuyWTBuL8Wkl5V0zKoxSbJKzlLuwcfq2HdQMOohoh/iMtQENAVXREYQw==" />
+            <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
+              aria-label="You must be signed in to make or propose changes" data-disable-with>
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-trash">
+    <path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path>
+</svg>
+            </button>
+</form>    </div>
+  </div>
+
+    <div class="d-flex hide-lg hide-xl flex-order-2 flex-grow-0">
+      <details class="dropdown details-reset details-overlay d-inline-block">
+        <summary
+          class="js-blob-dropdown-click btn-octicon"
+          aria-haspopup="true"
+          aria-label="possible actions"
+          data-test-selector="small-screen-more-options"
+          data-dropdown-tracking="{&quot;type&quot;:&quot;blob_edit_dropdown.more_options_click&quot;,&quot;context&quot;:{&quot;repository_id&quot;:81508260,&quot;actor_id&quot;:null,&quot;github_dev_enabled&quot;:false,&quot;edit_enabled&quot;:false,&quot;small_screen&quot;:true}}"
+        >
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal">
+    <path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+</svg>
+        </summary>
+
+        <ul class="dropdown-menu dropdown-menu-sw" style="width: 175px">
+            <li>
+                <a class="dropdown-item tooltipped tooltipped-nw js-remove-unless-platform"
+                   data-platforms="windows,mac"
+                   href="https://desktop.github.com">
+                  Open with Desktop
+                </a>
+            </li>
+          <li>
+            <a class="dropdown-item" href="/tree-sitter/tree-sitter-typescript/raw/master/typescript/src/parser.c">
+              Download
+            </a>
+          </li>
+
+            <li>
+              <a class="dropdown-item menu-item-danger" href="/tree-sitter/tree-sitter-typescript/delete/master/typescript/src/parser.c">Delete file</a>
+            </li>
+        </ul>
+      </details>
+    </div>
+</div>
+
+
+      
+    <div itemprop="text" class="Box-body p-0 blob-wrapper data type-text  gist-border-0">
+
+        <div class="text-center p-3" data-hpc>
+            <a href="/tree-sitter/tree-sitter-typescript/blob/master/typescript/src/parser.c?raw=true">View raw</a>
+              <p>(Sorry about that, but we can’t show files that are this big right now.)</p>
+        </div>
+    </div>
+
+    </div>
+
+
+  
+
+  <details class="details-reset details-overlay details-overlay-dark" id="jumpto-line-details-dialog">
+    <summary data-hotkey="l" aria-label="Jump to line"></summary>
+    <details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast linejump" aria-label="Jump to line">
+      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="js-jump-to-line-form Box-body d-flex" data-turbo="false" action="" accept-charset="UTF-8" method="get">
+        <input class="form-control flex-auto mr-3 linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line&hellip;" aria-label="Jump to line" autofocus>
+          <button data-close-dialog="" type="submit" data-view-component="true" class="btn">    Go
+</button>
+</form>    </details-dialog>
+  </details>
+
+
+</div>
+
+  </div>
+
+
+  </div>
+
+  </turbo-frame>
+
+
+    </main>
+  </div>
+
+  </div>
+
+          <footer class="footer width-full container-xl p-responsive">
+  <h2 class='sr-only'>Footer</h2>
+
+  <div class="position-relative d-flex flex-items-center pb-2 f6 color-fg-muted border-top color-border-muted flex-column-reverse flex-lg-row flex-wrap flex-lg-nowrap mt-6 pt-6">
+    <div class="list-style-none d-flex flex-wrap col-0 col-lg-2 flex-justify-start flex-lg-justify-between mb-2 mb-lg-0">
+      <div class="mt-2 mt-lg-0 d-flex flex-items-center">
+        <a aria-label="Homepage" title="GitHub" class="footer-octicon mr-2" href="https://github.com">
+          <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true" class="octicon octicon-mark-github">
+    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+</svg>
+</a>        <span>
+        &copy; 2022 GitHub, Inc.
+        </span>
+      </div>
+    </div>
+
+    <nav aria-label='footer' class="col-12 col-lg-8">
+      <h3 class='sr-only' id='sr-footer-heading'>Footer navigation</h3>
+      <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0" aria-labelledby='sr-footer-heading'>
+          <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;}">Terms</a></li>
+          <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;}">Privacy</a></li>
+          <li class="mr-3 mr-lg-0"><a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;}" href="https://github.com/security">Security</a></li>
+          <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;}">Status</a></li>
+          <li class="mr-3 mr-lg-0"><a data-ga-click="Footer, go to help, text:Docs" href="https://docs.github.com">Docs</a></li>
+          <li class="mr-3 mr-lg-0"><a href="https://support.github.com?tags=dotcom-footer" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;}">Contact GitHub</a></li>
+          <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;}">Pricing</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;}">API</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://services.github.com" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;}">Training</a></li>
+          <li class="mr-3 mr-lg-0"><a href="https://github.blog" data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;}">Blog</a></li>
+          <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 color-fg-muted"></span>
+  </div>
+</footer>
+
+
+
+
+  <div id="ajax-error-message" class="ajax-error-message flash flash-error" hidden>
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+    <button type="button" class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
+</svg>
+    </button>
+    You can’t perform that action at this time.
+  </div>
+
+  <div class="js-stale-session-flash flash flash-warn flash-banner" hidden
+    >
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+    <span class="js-stale-session-flash-signed-in" hidden>You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
+    <span class="js-stale-session-flash-signed-out" hidden>You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
+  </div>
+    <template id="site-details-dialog">
+  <details class="details-reset details-overlay details-overlay-dark lh-default color-fg-default hx_rsm" open>
+    <summary role="button" aria-label="Close dialog"></summary>
+    <details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast hx_rsm-dialog hx_rsm-modal">
+      <button class="Box-btn-octicon m-0 btn-octicon position-absolute right-0 top-0" type="button" aria-label="Close dialog" data-close-dialog>
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
+</svg>
+      </button>
+      <div class="octocat-spinner my-6 js-details-dialog-spinner"></div>
+    </details-dialog>
+  </details>
+</template>
+
+    <div class="Popover js-hovercard-content position-absolute" style="display: none; outline: none;" tabindex="0">
+  <div class="Popover-message Popover-message--bottom-left Popover-message--large Box color-shadow-large" style="width:360px;">
+  </div>
+</div>
+
+    <template id="snippet-clipboard-copy-button">
+  <div class="zeroclipboard-container position-absolute right-0 top-0">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn js-clipboard-copy m-2 p-0 tooltipped-no-delay" data-copy-feedback="Copied!" data-tooltip-direction="w">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon m-2">
+    <path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none m-2">
+    <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+</svg>
+    </clipboard-copy>
+  </div>
+</template>
+
+
+
+
+  </body>
+</html>
+
